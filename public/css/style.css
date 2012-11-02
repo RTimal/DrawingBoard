@@ -1,0 +1,13 @@
+html {
+}
+
+#border {
+	color: white;		
+}
+
+
+canvas {
+	position: relative;
+	border: solid 1px black;
+
+}
