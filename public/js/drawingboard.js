@@ -1,7 +1,5 @@
 var DrawingBoard = DrawingBoard || {};
 
-
-
 DrawingBoard.initDrawingBoard = function(brush) {
 	var canvas = document.getElementById("drawingboard");
 	var context = canvas.getContext("2d");
@@ -34,6 +32,7 @@ DrawingBoard.refresh = function() {
 			this.draw(event.type);
 			this.socket.emit('drawevent', {
 					drawevent: 0
+					brushlocation: this.brushlocation;
 				});
 		} 
 
@@ -42,6 +41,7 @@ DrawingBoard.refresh = function() {
 			this.draw(event.type);
 			this.socket.emit('drawevent', {
 				drawevent: 1
+				brushLocation: this.brushlocation
 			});
 		}
 
@@ -50,6 +50,7 @@ DrawingBoard.refresh = function() {
 				this.draw(event.type);
 				this.socket.emit('drawevent', {
 					drawevent: 2
+					brushlocation: this.brushlocation;
 				});
 			}
 		}
