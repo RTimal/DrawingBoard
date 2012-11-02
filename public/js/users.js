@@ -1,11 +1,10 @@
 var DrawingBoard = DrawingBoard || {};
 DrawingBoard.Users = DrawingBoard.Users || {};
 
-
 function User(name) {
 	this.id = this.users.length;
 	this.name = name;
-	
+
 	this.setBrushData= function(brushData) {
 		this.brushColor = brushData.brushColor;
 		this.brushName = brushData.brushName;
@@ -43,7 +42,7 @@ DrawingBoard.Users.removeUsersFromList = function (id) {
 	//remove user id from dom
 }
 
-DrawingBoard.Users.setBrushdata = function (userId, brushData) {, 
+DrawingBoard.Users.setBrushdata = function (userId, brushData) { 
 	this.users[userId].brushInfo = brushData;
 }
 

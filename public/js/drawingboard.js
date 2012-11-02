@@ -31,8 +31,8 @@ DrawingBoard.refresh = function() {
 			this.paint = true;
 			this.draw(event.type);
 			this.socket.emit('drawevent', {
-					drawevent: 0
-					brushlocation: this.brushlocation;
+					drawevent: 0,
+					brushlocation: this.brushlocation
 				});
 		} 
 
@@ -40,7 +40,7 @@ DrawingBoard.refresh = function() {
 			this.paint = false;
 			this.draw(event.type);
 			this.socket.emit('drawevent', {
-				drawevent: 1
+				drawevent: 1,
 				brushLocation: this.brushlocation
 			});
 		}
@@ -49,8 +49,8 @@ DrawingBoard.refresh = function() {
 			if(this.paint==true) {
 				this.draw(event.type);
 				this.socket.emit('drawevent', {
-					drawevent: 2
-					brushlocation: this.brushlocation;
+					drawevent: 2,
+					brushlocation: this.brushlocation
 				});
 			}
 		}
