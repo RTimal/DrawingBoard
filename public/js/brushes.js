@@ -21,10 +21,10 @@
 
 	}
 
-	function lineBrush(color, width, name) {
-		Brush.call(this, color, width);
-		this.name = name;
-	} 
+	function lineBrush(brushData) {
+		Brush.call(this, brushData.brushColor, brushData.brushWidth);
+		this.name = brushData.brushName;
+	}
 
 	inherit(Brush, lineBrush);
 
@@ -54,9 +54,6 @@
 				eventLocation.y
 				);
 	
-			//context.lineTo(eventLocation.x,eventLocation.y);
-
-			context.line
 			context.stroke();
 		}
 

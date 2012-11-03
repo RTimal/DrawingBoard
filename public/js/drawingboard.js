@@ -21,14 +21,11 @@ DrawingBoard.initDrawingBoard = function(brush) {
 		name: this.username, 
 		room: "room",
 		provider: "drawingboard",
-		brushData: {
-			brushName: this.activeBrush.name,
-			brushWidth: this.activeBrush.width,
-			brushColor: this.activeBrush.color,
-		}
+		brush: new lineBrush({brushColor:"red", brushWidth: 4.0})
 	}
 
 	this.Users.initialize(this.socket, userData);
+	this.ownerId = this.Users.getOwnerId();
 }
 
 DrawingBoard.setBrushLocation = function(brushlocation) {
@@ -45,7 +42,8 @@ DrawingBoard.refresh = function() {
 			this.draw(event.type);
 			this.socket.emit('drawevent', {
 					drawevent: 0,
-					brushlocation: this.brushlocation
+					brushlocation: this.brushlocation,
+					ownerId: this.OwnerId
 				});
 		} 
 
@@ -53,17 +51,20 @@ DrawingBoard.refresh = function() {
 			this.paint = false;
 			this.draw(event.type);
 			this.socket.emit('drawevent', {
-				drawevent: 1,
-				brushLocation: this.brushlocation
+				drawEvent: 1,
+				brushLocation: this.brushlocation,
+				OwnerId: this.OwnerId
 			});
 		}
+		
 
 		if(event.type == "mousemove"){
 			if(this.paint==true) {
 				this.draw(event.type);
 				this.socket.emit('drawevent', {
 					drawevent: 2,
-					brushlocation: this.brushlocation
+					brushlocation: this.brushlocation,
+					OwnerId: this.ownerid
 				});
 			}
 		}
@@ -80,10 +81,7 @@ DrawingBoard.setBrush = function(brush) {
 	this.activeBrush = brush;
 }
 
+
 DrawingBoard.draw = function(eventType) {
-	this.activeBrush.drawToCanvas(this.brushlocation, this.context, eventType);
-}
-
-DrawingBoard.addUser = function(user) {
-
+	this.Users.owner.brush.drawToCanvas(this.brushlocation, this.context, eventType);
 }

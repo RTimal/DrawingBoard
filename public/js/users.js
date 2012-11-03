@@ -2,35 +2,35 @@ var DrawingBoard = DrawingBoard || {};
 DrawingBoard.Users = DrawingBoard.Users || {};
 
 var User = function (userData) {
-	this.setAttributes(userData);
-
 	this.setAttributes= function (userData) {
 		this.name = userData.name;
-		this.uid = getTime();
+		this.uid = Math.round((new Date()).getTime() / 1000);
 		this.provider = userData.provider;
-		this.name = userData.name;
-		this.setBrushData(userData.brushData);
+		this.room = userData.room;
+		this.brush = userData.brush;
 	}
-	
-	this.setBrushData= function(brushData) {
-		this.brushColor = brushData.brushColor;
-		this.brushName = brushData.brushName;
-		this.brushData = brushData.brushWidth;
-	}
+	this.setAttributes(userData);
 }
 
 DrawingBoard.Users.initialize = function (socket, userData) {
 	this.socket = socket;
 	this.users = {};
 	socket.emit('getusers', {});
+
 	socket.on('userlist', function(data) {
-		this.users = data;
+		this.users = JSON.parse(data);
 	});
+
 	var self = this;
 	this.owner = new User(userData);
-	socket.emit('join', this.owner);
-	socket.on('adduser', function(user) {
-		self.addUser(user);
+	console.log(this.owner);
+
+	socket.emit('join', JSON.stringify(this.owner));
+
+	socket.on('adduser', function (user) {
+		u = JSON.parse(user);
+		console.log(u);
+		self.addUser(u);
 	});
 }
 
@@ -38,6 +38,9 @@ DrawingBoard.Users.getUsers = function () {
 	return users;
 }
 
+DrawingBoard.Users.getOwnerId = function () {
+	return this.owner.uid;
+}
 DrawingBoard.Users.addUser = function (user) {
 	this.users[user.uid] = user;
 }

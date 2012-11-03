@@ -3,7 +3,6 @@ var express = require('express'),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
 	hbs = require('express-hbs'),
-	user = require('modules/user'),
 	users = {};
 
 app.engine('hbs', hbs.express3({partialsDir: __dirname + '/views/partials'}));
@@ -16,19 +15,19 @@ server.listen(81);
 io.sockets.on('connection', function (socket) {
 
 	socket.on('getusers', function (data) {
-		socket.emit('userlist', users);
+		socket.emit('userlist', JSON.stringify(users));
 	});
 
 	socket.on('join', function (user) {
-		socket.join(user.room);
-		users[user.uid] = user;
-		io.sockets.in(data.room).emit('adduser', user);
+		u = JSON.parse(user);
+		socket.join(u.room);
+		users[u.uid] = u;
+		io.sockets.in(u.room).emit('adduser', user);
 	});
 
 	socket.on('leave', function (user) { 
 		socket.leave(user.room)
 		io.sockets.in(user.room).emit('removeuser', user.uid);
-		//remove user from other users list
 	 });
 
 	socket.on('drawevent', function (data) { 
