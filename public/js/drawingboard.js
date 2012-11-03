@@ -16,6 +16,19 @@ DrawingBoard.initDrawingBoard = function(brush) {
 	this.paint = false;
 	this.dragging = false;
 	this.connectToServer();
+
+	userData = {
+		name: this.username, 
+		room: "room",
+		provider: "drawingboard",
+		brushData: {
+			brushName: this.activeBrush.name,
+			brushWidth: this.activeBrush.width,
+			brushColor: this.activeBrush.color,
+		}
+	}
+
+	this.Users.initialize(this.socket, userData);
 }
 
 DrawingBoard.setBrushLocation = function(brushlocation) {
