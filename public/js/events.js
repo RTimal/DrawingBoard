@@ -33,7 +33,11 @@ DrawingBoard.Events.bindEventHandlers = function(canvas, refreshCallback) {
 	$(canvas).mouseup(function(event) {
 		self.addEvent(event);
 		refreshCallback();
-	})
+	});
+
+	
+
+
 }
 
 

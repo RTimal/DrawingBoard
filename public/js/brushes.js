@@ -30,36 +30,25 @@
 
 	lineBrush.prototype.drawToCanvas = function(eventLocation, context, eventType) {
 		context.linecap = "round";
-
+		context.shadowBlur = 10;
+		context.shadowColor = "yellow";
+		context.globalAlpha = .1;
 		if(eventType == "mousedown") {
+			this.paint = true;
 			context.beginPath();
 			context.moveTo(eventLocation.x, eventLocation.y);
-			context.arc(eventLocation.x, eventLocation.y, 1, 0, 2*Math.PI, true);
-			context.fillStyle = this.color;
-			context.fill();
 		}
 
-		if(eventType == "mousemove") {		
-			context.lineWidth = this.width;
-			context.strokeStyle = this.color;
-
-			context.bezierCurveTo(
-				eventLocation.x, 
-				eventLocation.y, 
-				eventLocation.x, 
-				eventLocation.y, 
-				eventLocation.x, 
-				eventLocation.y,
-				eventLocation.x, 
-				eventLocation.y
-				);
-	
-			context.stroke();
+		if(eventType == "mousemove") {
+			if(this.paint == true) {
+				context.lineWidth = this.width;
+				context.strokeStyle = this.color;
+				context.lineTo(eventLocation.x, eventLocation.y);	
+				context.stroke();
+			}
 		}
 
 		if(eventType == "mouseup") {
-			context.arc(eventLocation.x, eventLocation.y, 1, 0, 2*Math.PI, true);
-			context.stroke();
-			context.closePath();
+			this.paint = false;
 		}
 	}

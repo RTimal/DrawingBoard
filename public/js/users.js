@@ -7,7 +7,8 @@ var User = function (userData) {
 		this.uid = Math.round((new Date()).getTime() / 1000);
 		this.provider = userData.provider;
 		this.room = userData.room;
-		this.brush = userData.brush;
+		this.brushData = userData.brushData;
+		this.brush = {};
 	}
 	this.setAttributes(userData);
 }
@@ -16,33 +17,46 @@ DrawingBoard.Users.initialize = function (socket, userData) {
 	this.socket = socket;
 	this.users = {};
 	socket.emit('getusers', {});
-
+	var self = this;
+	
 	socket.on('userlist', function(data) {
-		this.users = JSON.parse(data);
+		data = JSON.parse(data);
+		for (var prop in data) {
+			self.addUser(data[prop]);
+		}
 	});
 
-	var self = this;
-	this.owner = new User(userData);
-	console.log(this.owner);
-
-	socket.emit('join', JSON.stringify(this.owner));
+	var owner = new User(userData);
+	this.ownerID = owner.uid
+	socket.emit('join', JSON.stringify(owner));
 
 	socket.on('adduser', function (user) {
 		u = JSON.parse(user);
-		console.log(u);
 		self.addUser(u);
 	});
 }
 
 DrawingBoard.Users.getUsers = function () {
-	return users;
+	return this.users;
+}
+
+DrawingBoard.Users.generateUserBrush = function(user) {
+	var brushName = user.brushData.brushName;
+	var brushFunc = brushName+"Brush";
+	user.brush = new window[brushFunc](user.brushData);
+}
+
+DrawingBoard.Users.changeUserBrush = function(brushData, uid) {
+
 }
 
 DrawingBoard.Users.getOwnerId = function () {
-	return this.owner.uid;
+	return this.ownerID;
 }
+
 DrawingBoard.Users.addUser = function (user) {
-	this.users[user.uid] = user;
+	this.generateUserBrush(user);
+	this.users[user.uid.toString()] = user;
 }
 
 DrawingBoard.Users.displayUsers = function () {
@@ -56,8 +70,3 @@ DrawingBoard.Users.refreshList = function() {
 DrawingBoard.Users.removeUsersFromList = function (id) {
 	//remove user id from dom
 }
-
-DrawingBoard.Users.setBrushData = function (userId, brushData) { 
-	this.users[userId].brushInfo = brushData;
-}
-

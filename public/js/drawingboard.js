@@ -1,13 +1,13 @@
 var DrawingBoard = DrawingBoard || {};
 
-DrawingBoard.initDrawingBoard = function(brush) {
+DrawingBoard.initDrawingBoard = function() {
 	var canvas = document.getElementById("drawingboard");
 	var context = canvas.getContext("2d");
 	this.brushlocation = {x:0, y:0};
 	this.context = context;
 	this.canvas = canvas;
-	this.activeBrush = brush;
 	var self = this;
+	this.room = "room";
 
 	this.Events.bindEventHandlers(canvas, function(){
 		self.refresh();
@@ -19,13 +19,32 @@ DrawingBoard.initDrawingBoard = function(brush) {
 
 	userData = {
 		name: this.username, 
-		room: "room",
+		room: this.room,
 		provider: "drawingboard",
-		brush: new lineBrush({brushColor:"red", brushWidth: 4.0})
+		brushData: {
+			brushName: "line",
+			brushColor: "yellow",
+			brushWidth: 1.0
+		}
 	}
 
 	this.Users.initialize(this.socket, userData);
+	this.users = this.Users.getUsers();
 	this.ownerId = this.Users.getOwnerId();
+	var self = this;
+
+	this.socket.on('mousedown', function (drawevent) { 
+		self.draw('mousedown', drawevent.ownerId, drawevent.brushlocation);
+	});
+
+	this.socket.on('mouseup', function (drawevent) {
+		self.draw('mouseup', drawevent.ownerId, drawevent.brushlocation);
+	});
+
+	this.socket.on('mousemove', function (drawevent) {
+		self.draw('mousemove', drawevent.ownerId, drawevent.brushlocation );
+	});
+
 }
 
 DrawingBoard.setBrushLocation = function(brushlocation) {
@@ -39,41 +58,40 @@ DrawingBoard.refresh = function() {
 
 		if(event.type == "mousedown") {
 			this.paint = true;
-			this.draw(event.type);
-			this.socket.emit('drawevent', {
-					drawevent: 0,
+			this.draw('mousedown', this.ownerId, this.brushlocation);
+			this.socket.emit('mousedown', {
 					brushlocation: this.brushlocation,
-					ownerId: this.OwnerId
+					ownerId: this.ownerId,
+					room: this.room
 				});
 		} 
 
 		if(event.type == "mouseup") {
 			this.paint = false;
-			this.draw(event.type);
-			this.socket.emit('drawevent', {
-				drawEvent: 1,
-				brushLocation: this.brushlocation,
-				OwnerId: this.OwnerId
+			this.draw('mouseup', this.ownerId, this.brushlocation);
+			this.socket.emit('mouseup', {
+				brushlocation: this.brushlocation,
+				ownerId: this.ownerId,
+				room: this.room
 			});
-		}
-		
 
-		if(event.type == "mousemove"){
+		}
+
+		if(event.type == "mousemove") {
 			if(this.paint==true) {
-				this.draw(event.type);
-				this.socket.emit('drawevent', {
-					drawevent: 2,
+				this.draw('mousemove', this.ownerId, this.brushlocation);
+				this.socket.emit('mousemove', {
 					brushlocation: this.brushlocation,
-					OwnerId: this.ownerid
+					ownerId: this.ownerId,
+					room: this.room
 				});
 			}
 		}
-
 	}
 }
 
 DrawingBoard.connectToServer = function () {
-	var socket = io.connect('http://localhost:81');
+	var socket = io.connect('http://192.168.1.12:81');
 	this.socket = socket;
 }
 
@@ -81,7 +99,9 @@ DrawingBoard.setBrush = function(brush) {
 	this.activeBrush = brush;
 }
 
-
-DrawingBoard.draw = function(eventType) {
-	this.Users.owner.brush.drawToCanvas(this.brushlocation, this.context, eventType);
+DrawingBoard.draw = function(eventType, userID, brushlocation) {
+	if(this.users[userID]!=null) {
+		var thisuser = this.users[userID];
+		thisuser.brush.drawToCanvas(brushlocation, this.context, eventType);
+	}
 }

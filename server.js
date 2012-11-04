@@ -26,15 +26,27 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('leave', function (user) { 
-		socket.leave(user.room)
+		socket.leave(user.room);
 		io.sockets.in(user.room).emit('removeuser', user.uid);
 	 });
 
-	socket.on('drawevent', function (data) { 
-		console.log(data);
+	socket.on('mousedown', function (drawevent) { 
+		//io.sockets.in(drawevent.room).emit('mousedown' , drawevent);
+		this.broadcast.to(drawevent.room).emit('mousedown' , drawevent);
 	});
+
+	socket.on('mouseup', function (drawevent) {
+		//io.sockets.in(drawevent.room).emit('mouseup', drawevent);
+		this.broadcast.to(drawevent.room).emit('mouseup' , drawevent);
+	});
+
+	socket.on('mousemove', function (drawevent) {
+		//io.sockets.in(drawevent.room).emit('mousemove', drawevent);
+		this.broadcast.to(drawevent.room).emit('mousemove' , drawevent);
+	});
+
 });
 
 app.get('/', function (req, res) {
-	res.render('index.hbs');
-});
+		res.render('index.hbs');
+	});
