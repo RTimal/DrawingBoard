@@ -8,11 +8,6 @@ DrawingBoard.initDrawingBoard = function() {
 	this.canvas = canvas;
 	var self = this;
 	this.room = "room";
-
-	this.Events.bindEventHandlers(canvas, function(){
-		self.refresh();
-	});
-
 	this.paint = false;
 	this.dragging = false;
 	this.connectToServer();
@@ -33,18 +28,11 @@ DrawingBoard.initDrawingBoard = function() {
 	this.ownerId = this.Users.getOwnerId();
 	var self = this;
 
-	this.socket.on('mousedown', function (drawevent) { 
-		self.draw('mousedown', drawevent.ownerId, drawevent.brushlocation);
+	this.Events.bindEventHandlers(canvas, this.socket, function() {
+		self.refresh();
+	}, function(eventType, userID, brushlocation) {
+		self.draw(eventType, userID, brushlocation);
 	});
-
-	this.socket.on('mouseup', function (drawevent) {
-		self.draw('mouseup', drawevent.ownerId, drawevent.brushlocation);
-	});
-
-	this.socket.on('mousemove', function (drawevent) {
-		self.draw('mousemove', drawevent.ownerId, drawevent.brushlocation );
-	});
-
 }
 
 DrawingBoard.setBrushLocation = function(brushlocation) {
