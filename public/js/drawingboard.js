@@ -23,7 +23,7 @@ DrawingBoard.initDrawingBoard = function() {
 	this.Users.initialize(this.socket, userData);
 	this.users = this.Users.getUsers();
 	this.ownerId = this.Users.getOwnerId();
-	this.Events.bindEventHandlers(canvas, this.socket, function() {
+	this.Events.bindEventHandlers(canvas, this.socket, this.ownerId, function() {
 		self.refresh();
 	}, function(eventType, userID, brushlocation) {
 		self.draw(eventType, userID, brushlocation);
@@ -44,7 +44,6 @@ DrawingBoard.refresh = function() {
 					ownerId: this.ownerId,
 					room: this.room
 				});
-			this.draw('mousedown', this.ownerId, this.brushlocation);
 		} 
 
 		if(event.type == "mouseup") {
@@ -53,7 +52,6 @@ DrawingBoard.refresh = function() {
 				ownerId: this.ownerId,
 				room: this.room
 			});
-			this.draw('mouseup', this.ownerId, this.brushlocation);
 		}
 
 		if(event.type == "mousemove") {
@@ -62,7 +60,6 @@ DrawingBoard.refresh = function() {
 					ownerId: this.ownerId,
 					room: this.room
 				});
-			this.draw('mousemove', this.ownerId, this.brushlocation);
 		}
 }
 

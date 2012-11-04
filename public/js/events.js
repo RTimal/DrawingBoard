@@ -14,7 +14,7 @@ DrawingBoard.Events.getMouseEvents = function(event) {
 	return this.mouseEvents;
 }
 
-DrawingBoard.Events.bindEventHandlers = function(canvas, socket, refreshCallback, drawCallBack) {
+DrawingBoard.Events.bindEventHandlers = function(canvas, socket, ownerId, emitEvent, drawCallBack) {
 	this.mouseEvents = Array();
 	offsetLeft = $(canvas).offset().left;
 	offsetTop = $(canvas).offset().top
@@ -34,17 +34,20 @@ DrawingBoard.Events.bindEventHandlers = function(canvas, socket, refreshCallback
 
 	$(canvas).mousedown(function(event) {
 		self.addEvent(event);
-		refreshCallback();
+		emitEvent();
+		drawCallBack('mousedown', ownerId, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
 	});
 
 	$(canvas).mousemove(function(event) {
 		self.addEvent(event);
-		refreshCallback();
+		emitEvent();
+		drawCallBack('mousemove', ownerId, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
 	});
 
 	$(canvas).mouseup(function(event) {
 		self.addEvent(event);
-		refreshCallback();
+		emitEvent();
+		drawCallBack('mouseup', ownerId, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
 	});
 
 }
