@@ -9,9 +9,7 @@ DrawingBoard.initDrawingBoard = function() {
 	var self = this;
 	this.room = "room";
 	this.paint = false;
-	this.dragging = false;
 	this.connectToServer();
-
 	userData = {
 		name: this.username, 
 		room: this.room,
@@ -22,12 +20,9 @@ DrawingBoard.initDrawingBoard = function() {
 			brushWidth: 1.0
 		}
 	}
-
 	this.Users.initialize(this.socket, userData);
 	this.users = this.Users.getUsers();
 	this.ownerId = this.Users.getOwnerId();
-	var self = this;
-
 	this.Events.bindEventHandlers(canvas, this.socket, function() {
 		self.refresh();
 	}, function(eventType, userID, brushlocation) {
