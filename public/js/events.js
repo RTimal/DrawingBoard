@@ -35,9 +35,6 @@ DrawingBoard.Events.bindEventHandlers = function(canvas, refreshCallback) {
 		refreshCallback();
 	});
 
-	
-
-
 }
 
 

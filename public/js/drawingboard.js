@@ -52,42 +52,35 @@ DrawingBoard.setBrushLocation = function(brushlocation) {
 }
 
 DrawingBoard.refresh = function() {
-	for(var i = 0; i < this.Events.getMouseEvents().length; i++) {
 		var event = this.Events.getNextMouseEvent();
 		this.setBrushLocation({x:event.pageX - this.canvas.offsetLeft, y:event.pageY - this.canvas.offsetTop});
 
 		if(event.type == "mousedown") {
-			this.paint = true;
-			this.draw('mousedown', this.ownerId, this.brushlocation);
 			this.socket.emit('mousedown', {
 					brushlocation: this.brushlocation,
 					ownerId: this.ownerId,
 					room: this.room
 				});
+			this.draw('mousedown', this.ownerId, this.brushlocation);
 		} 
 
 		if(event.type == "mouseup") {
-			this.paint = false;
-			this.draw('mouseup', this.ownerId, this.brushlocation);
 			this.socket.emit('mouseup', {
 				brushlocation: this.brushlocation,
 				ownerId: this.ownerId,
 				room: this.room
 			});
-
+			this.draw('mouseup', this.ownerId, this.brushlocation);
 		}
 
 		if(event.type == "mousemove") {
-			if(this.paint==true) {
-				this.draw('mousemove', this.ownerId, this.brushlocation);
 				this.socket.emit('mousemove', {
 					brushlocation: this.brushlocation,
 					ownerId: this.ownerId,
 					room: this.room
 				});
-			}
+			this.draw('mousemove', this.ownerId, this.brushlocation);
 		}
-	}
 }
 
 DrawingBoard.connectToServer = function () {
