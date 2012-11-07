@@ -16,8 +16,8 @@ DrawingBoard.initDrawingBoard = function() {
 		provider: "drawingboard",
 		brushData: {
 			brushName: "line",
-			brushColor: "yellow",
-			brushWidth: 1.0
+			brushColor: "purple",
+			brushWidth: 3.0
 		}
 	}
 	this.Users.initialize(this.socket, userData);
@@ -64,7 +64,7 @@ DrawingBoard.refresh = function() {
 }
 
 DrawingBoard.connectToServer = function () {
-	var socket = io.connect('http://192.168.1.12:81');
+	var socket = io.connect('http://192.168.1.11:81');
 	this.socket = socket;
 }
 
