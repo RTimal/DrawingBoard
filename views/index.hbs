@@ -1,23 +1,26 @@
 <!doctype html>
 <html>
 <head>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="/js/drawingboard.js"></script>
-    <script type="text/javascript" src="/js/events.js"></script>
-    <script type="text/javascript" src="/js/brushes.js"></script>
-    <script type="text/javascript" src="/js/users.js"></script>
-    <script type="text/javascript" src="/js/app.js"></script>
-    <script type="text/javascript" src="/js/socket.io.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <script>
-    </script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/drawingboard.js"></script>
+	<script type="text/javascript" src="/js/events.js"></script>
+	<script type="text/javascript" src="/js/brushes.js"></script>
+	<script type="text/javascript" src="/js/users.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+	<script type="text/javascript" src="/js/socket.io.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script>
+	</script>
 </head>
 <body>
-    {{name}}
-    {{brush}}
-<div id = "border">
-	<canvas id ="drawingboard" width="900" height="800"></canvas>
-</div>
-
+	<div id="container">
+		<div id ="header">
+		</div>
+		<div id="drawingtool" class="clearfix">
+			<canvas id ="drawingboard" width="900" height="800"></canvas>
+				   <div id="tools">
+			</div>
+		</div>
+	</div>
 </body>	
 </html>
