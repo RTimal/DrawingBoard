@@ -9,18 +9,62 @@
 	<script type="text/javascript" src="/js/app.js"></script>
 	<script type="text/javascript" src="/js/socket.io.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/buttons.css">
 	<script>
 	</script>
 </head>
 <body>
 	<div id="container">
 		<div id ="header">
+			<ul>
+
+				<lI><a href="" class="button orange glossy round" data-icon="▦">View Gallery</a></li>
+
+				<li><button class="button pink glass round" data-icon="☺">Invite a Friend</button></li>
+ 
+				<li><button class="button green glossy round" data-icon="➥">Create Room </button></li>
+
+			</ul>
 		</div>
+
+		<div id="components">
 		<div id="drawingtool" class="clearfix">
+			<div id="titlebar">
+
+				<div id="roomtitle">
+					Room:
+					<div id="value">
+						Lobby
+					</div>
+				</div>
+
+				<div id="username">
+					Username:
+					<div id="value">
+						 Rajiev
+					</div>
+				</div>
+			
+			</div>
 			<canvas id ="drawingboard" width="900" height="800"></canvas>
-				   <div id="tools">
+			<div id="tools" onselectstart="return false">
+				<div id="palette">
+					
+				</div>
+				<div id="buttons">
+					<button class="button blue glossy round" onselectstart="return false" data-icon="➥">Save Image</button>
+					<button class="button blue glossy round" onselectstart="return false" data-icon="✎">Publish to gallery</button>
+				</div>
+			</div>
+			<div id="chattool" class="clearfix">
+				<div id="typingbox">
+					<input type ="text" name="textbox" id="textbox"></input>
+					<button class="button green glossy">Send</button>
+				</div>	
 			</div>
 		</div>
+		</div>
+	</div>
 	</div>
 </body>	
 </html>
