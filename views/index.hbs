@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="/js/brushes.js"></script>
 	<script type="text/javascript" src="/js/users.js"></script>
 	<script type="text/javascript" src="/js/app.js"></script>
+	<script type="text/javascript" src="/js/utils.js"></script>
 	<script type="text/javascript" src="/js/socket.io.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/buttons.css">
@@ -18,11 +19,11 @@
 		<div id ="header">
 			<ul>
 
-				<lI><a href="" class="button orange glossy round" data-icon="▦">View Gallery</a></li>
-
 				<li><button class="button pink glass round" data-icon="☺">Invite a Friend</button></li>
  
 				<li><button class="button green glossy round" data-icon="➥">Create Room </button></li>
+
+				<li><button class="button orange glass round disabled" data-icon="▦">View Gallery</button></li>
 
 			</ul>
 		</div>
@@ -52,8 +53,8 @@
 					
 				</div>
 				<div id="buttons">
-					<button class="button blue glossy round" onselectstart="return false" data-icon="➥">Save Image</button>
-					<button class="button blue glossy round" onselectstart="return false" data-icon="✎">Publish to gallery</button>
+					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="➥">Save Image</button>
+					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="✎">Publish to gallery</button>
 				</div>
 			</div>
 			<div id="chattool" class="clearfix">

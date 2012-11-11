@@ -26,9 +26,10 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.in(u.room).emit('adduser', user);
 	});
 
-	socket.on('leave', function (user) { 
-		socket.leave(user.room);
-		io.sockets.in(user.room).emit('removeuser', user.uid);
+	socket.on('leave', function (uid) {
+		socket.leave(users[uid].room);
+		users[uid] = null;
+		io.sockets.in(user.room).emit('removeuser', uid);
 	 });
 
 	socket.on('mousedown', function (drawevent) { 
