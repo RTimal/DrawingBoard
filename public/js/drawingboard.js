@@ -11,6 +11,7 @@ DrawingBoard.initDrawingBoard = function() {
 	if(this.room == undefined) {
 	this.room = "Lobby"
 	}
+	
 	alert(this.room);
 	this.connectToEventsServer();
 	this.connectToChatServer();
@@ -25,7 +26,7 @@ DrawingBoard.initDrawingBoard = function() {
 			brushWidth: 10.0
 		}
 	}
-	this.Users.initialize(this.socket, userData);
+	this.Users.initialize(this.socket, this.chatsocket, userData);
 	this.users = this.Users.getUsers();
 	this.ownerId = this.Users.getOwnerId();
 
@@ -75,8 +76,8 @@ DrawingBoard.connectToEventsServer = function () {
 }
 
 DrawingBoard.connectToChatServer = function () {
-	//var chatsocket = io.connect('http://localhost:82');
-	//this.chatsocket = chatsocket;
+	var chatsocket = io.connect('http://localhost:82');
+	this.chatsocket = chatsocket;
 }
 
 DrawingBoard.setBrush = function(brush) {

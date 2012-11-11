@@ -13,7 +13,7 @@ var User = function (userData) {
 	this.setAttributes(userData);
 }
 
-DrawingBoard.Users.initialize = function (socket, userData) {
+DrawingBoard.Users.initialize = function (socket, chatsocket, userData) {
 	this.socket = socket;
 	this.users = {};
 	socket.emit('getusers', {});
@@ -29,7 +29,8 @@ DrawingBoard.Users.initialize = function (socket, userData) {
 	var owner = new User(userData);
 	this.ownerID = owner.uid
 	socket.emit('join', JSON.stringify(owner));
-
+	chatsocket.emit('join', JSON.stringify(owner));
+	
 	socket.on('adduser', function (user) {
 		u = JSON.parse(user);
 		self.addUser(u);

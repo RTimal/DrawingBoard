@@ -5,7 +5,7 @@ var express = require('express'),
 	hbs = require('express-hbs'),
 	users = {};
 
-io.set('log level', 1);
+//io.set('log level', 0);
 app.engine('hbs', hbs.express3({partialsDir: __dirname + '/views/partials'}));
 app.set('view engine', 'hbs');
 app.set('view', __dirname + '/views');
@@ -15,13 +15,14 @@ app.use(express.static(__dirname + '/public'));
 server.listen(82)
 
 io.sockets.on('connection', function (socket){
-	socket.on('join', function (userInfo) {
-		u = json.parse(userInfo);
+	socket.on('join', function (user) {
+		u = JSON.parse(user);
 		socket.join(u.room);
-		users[userInfo.id] = u;
+		users[user.id] = u;
+		console.log(u);
 	});
 
-	socket.on('chatmesage', function (message){
+	socket.on('chatmessage', function (message){
 		this.broadcast.to(users[message.userID].room).emit(message.data);
 	});
 
