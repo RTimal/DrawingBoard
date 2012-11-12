@@ -32,18 +32,15 @@ io.sockets.on('connection', function (socket) {
 		users[uid] = null;
 	 });
 
-	socket.on('mousedown', function (drawevent) { 
-		//io.sockets.in(drawevent.room).emit('mousedown' , drawevent);
+	socket.on('mousedown', function (drawevent) {
 		this.broadcast.to(drawevent.room).emit('mousedown' , drawevent);
 	});
 
 	socket.on('mouseup', function (drawevent) {
-		//io.sockets.in(drawevent.room).emit('mouseup', drawevent);
 		this.broadcast.to(drawevent.room).emit('mouseup' , drawevent);
 	});
 
 	socket.on('mousemove', function (drawevent) {
-		//io.sockets.in(drawevent.room).emit('mousemove', drawevent);
 		this.broadcast.to(drawevent.room).emit('mousemove' , drawevent);
 	});
 
