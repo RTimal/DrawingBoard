@@ -1,6 +1,6 @@
 var DrawingBoard = DrawingBoard || {};
 
-DrawingBoard.initDrawingBoard = function() {
+DrawingBoard.initDrawingBoard = function(username) {
 	var canvas = document.getElementById("drawingboard");
 	var context = canvas.getContext("2d");
 	this.brushlocation = {x:0, y:0};
@@ -11,11 +11,7 @@ DrawingBoard.initDrawingBoard = function() {
 	if(this.room == undefined) {
 	this.room = "Lobby"
 	}
-	
-	alert(this.room);
-	this.connectToEventsServer();
-	this.connectToChatServer();
-	
+
 	userData = {
 		name: this.username, 
 		room: this.room,
@@ -26,10 +22,17 @@ DrawingBoard.initDrawingBoard = function() {
 			brushWidth: 10.0
 		}
 	}
-	this.Users.initialize(this.socket, this.chatsocket, userData);
+
+	this.connectToEventsServer();
+	this.connectToChatServer();
+	
+
+	var owner = this.Users.initialize(this.socket, userData);
 	this.users = this.Users.getUsers();
 	this.ownerId = this.Users.getOwnerId();
 
+	this.Chat.initialize(this.chatsocket, owner);
+	
 	this.Events.bindEventHandlers(canvas, this.socket, this.ownerId, function() {
 		self.refresh();
 	}, function(eventType, userID, brushlocation) {

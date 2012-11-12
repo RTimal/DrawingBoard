@@ -27,9 +27,9 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('leave', function (uid) {
+		io.sockets.in(users[uid].room).emit('removeuser', uid);
 		socket.leave(users[uid].room);
 		users[uid] = null;
-		io.sockets.in(user.room).emit('removeuser', uid);
 	 });
 
 	socket.on('mousedown', function (drawevent) { 
