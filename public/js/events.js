@@ -26,9 +26,11 @@ DrawingBoard.Events.bindDOMEvents = function() {
 		$('#tools').removeClass("unselectable");
 		$('#chattool').removeClass("unselectable");
 	});
+
+
 }
 
-DrawingBoard.Events.bindEventHandlers = function(canvas, socket, ownerId, emitEvent, drawCallBack) {
+DrawingBoard.Events.bindEventHandlers = function(canvas, chatsocket, socket, ownerId, emitEvent, drawCallBack) {
 	this.bindDOMEvents();
 	this.mouseEvents = Array();
 	offsetLeft = $(canvas).offset().left;

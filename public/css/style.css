@@ -78,7 +78,6 @@ html, body {
 	padding-top: 37px;
 	padding-left: 300px;
 	margin: 0 auto;
-	margin-top:80px;
 }
 
 #chattool{
@@ -122,6 +121,12 @@ html, body {
 	background-color:beige;
 	float: left;
 }
+
+#buttonpanel {
+	position: relative;
+	display: inline-block;
+	margin-top: -400px;
+}
 canvas {
 	float:left;
 	background-color:white;
@@ -137,6 +142,7 @@ canvas {
 	font-style: italic;
 	position: relative;
 }
+
 
 .clearfix:after {
 	content: ".";
