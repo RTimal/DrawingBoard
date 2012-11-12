@@ -32,7 +32,7 @@
 		context.linecap = "round";
 		context.shadowBlur = 0;
 		context.shadowColor = "yellow";
-		context.globalAlpha = .1;
+		context.globalAlpha = 1;
 		if(eventType == "mousedown") {
 			this.paint = true;
 		}

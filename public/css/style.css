@@ -73,11 +73,9 @@ html, body {
 }
 
 #drawingtool {
-	width:1500px;
-	padding:137px;
-	padding-top: 37px;
-	padding-left: 300px;
-	margin: 0 auto;
+	width: 1500px;
+margin-left: 285px;
+margin-top: 40px;
 }
 
 #chattool{

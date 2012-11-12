@@ -18,8 +18,8 @@ DrawingBoard.initDrawingBoard = function(username) {
 		provider: "drawingboard",
 		brushData: {
 			brushName: "line",
-			brushColor: "purple",
-			brushWidth: 10.0
+			brushColor: "green",
+			brushWidth: 3.0
 		}
 	}
 

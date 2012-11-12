@@ -22,15 +22,15 @@ io.sockets.on('connection', function (socket){
 		users[u.uid] = u;
 	});
 
-	socket.on('chatmessage', function (message){
+	socket.on('chatmessage', function (message) {
 		this.broadcast.to(users[message.uid].room).emit(message.data);
 	});
 
-	socket.on('leave', function (data){
+	socket.on('leave', function (data) {
 		users[data.userID] = null;
 	});
 });
 
-app.get('/rooms', function (req, res){
+app.get('/rooms', function (req, res) {
 	res.render('index.hbs');
 });
