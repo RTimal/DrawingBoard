@@ -1,8 +1,8 @@
 var DrawingBoard = DrawingBoard || {};
 DrawingBoard.Users = DrawingBoard.Users || {};
 
-var User = function (userData) {
-	this.setAttributes= function (userData) {
+var User = function(userData) {
+	this.setAttributes= function(userData) {
 		this.name = userData.name;
 		this.uid = Math.round((new Date()).getTime() / 1000);
 		this.provider = userData.provider;
@@ -13,12 +13,15 @@ var User = function (userData) {
 	this.setAttributes(userData);
 }
 
-DrawingBoard.Users.initialize = function (socket, userData) {
-	this.socket = socket;
+DrawingBoard.Users.initialize = function(socket, userData) {
 	this.users = {};
-	socket.emit('getusers', {});
 	var self = this;
-	
+	var owner = new User(userData);
+	this.ownerID = owner.uid;
+
+
+	socket.emit('getusers', {});
+
 	socket.on('userlist', function(data) {
 		data = JSON.parse(data);
 		for (var prop in data) {
@@ -26,14 +29,14 @@ DrawingBoard.Users.initialize = function (socket, userData) {
 		}
 	});
 
-	var owner = new User(userData);
-	this.ownerID = owner.uid
-	socket.emit('join', JSON.stringify(owner));
-
 	socket.on('adduser', function (user) {
 		u = JSON.parse(user);
 		self.addUser(u);
 	});
+
+	socket.emit('join', JSON.stringify(owner));
+
+	return owner;
 }
 
 DrawingBoard.Users.getUsers = function () {
@@ -54,7 +57,7 @@ DrawingBoard.Users.getOwnerId = function () {
 	return this.ownerID;
 }
 
-DrawingBoard.Users.addUser = function (user) {
+DrawingBoard.Users.addUser = function(user) {
 	this.generateUserBrush(user);
 	this.users[user.uid.toString()] = user;
 }

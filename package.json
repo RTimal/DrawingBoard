@@ -1,9 +1,13 @@
 {
-  "name": "hello-world",
-  "description": "hello world test app",
-  "version": "0.0.1",
+  "name": "DrawingBoard",
+  "description": "Drawing Board",
+  "version": "0.5",
   "private": true,
   "dependencies": {
-    "express": "3.x"
+    "express": "3.x",
+    "express-hbs": "*",
+    "handlebars": "*",
+    "mongoose": "*",
+    "socket.io": "*"
   }
 }

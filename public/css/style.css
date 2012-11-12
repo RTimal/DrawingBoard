@@ -1,13 +1,188 @@
-html {
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:bold+Lobster);
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+@import url(http://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise);
+
+
+
+html, body {
+	padding:0;
+	margin:0;
 }
 
 #border {
 	color: white;		
 }
 
+#header {
+	width:100%;
+	background-color:white;
+	position:fixed;
+	z-index:200;
+	background-image:url('../img/1411.png');
+	box-shadow: 0 1px 5px 1px rgba(169, 169, 169, 0.60), 0 0 3px 1px rgba(169, 169, 169, 0.10);
+	text-align: center;
 
-canvas {
+}
+
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+	 Introduced in IE 10.
+	 See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+	cursor:not-allowed; /*makes it even more obvious*/
+}
+
+#roomtitle {
+
+	float: left;
+	margin-left: 400px;
+	font-family: 'Waiting for the Sunrise';
+	font-weight: 900;
+	font-size: 30px;
+	color: hsl(39, 100%, 50%);
+}
+
+#value {
+	display: inline;
+	color: hsl(88, 70%, 60%);
+}
+
+#username {
+	margin-left: 650px;
+	font-family: 'Waiting for the Sunrise';
+	font-weight: 700;
+	font-size: 30px;
+	color: hsl(39, 100%, 50%);
+	float: left;
+}
+
+
+#titlebar {
+	text-align: center;
+	border-radius: 10px 10px 0px 0px;
+	border: 1px solid white;
+	color:white;
+	width:1497px;
+	height:50px;
+}
+
+#drawingtool {
+	width:1500px;
+	padding:137px;
+	padding-top: 37px;
+	padding-left: 300px;
+	margin: 0 auto;
+}
+
+#chattool{
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 0 0px 10px 10px;
+	-moz-border-radius: 10px;
+	-o-border-radius: 10px;
+	-ms-border-radius: 10px;
+	width:400px;
+	background-color: white;
+	float:left;
+	height:900px;
+	box-shadow: -1px 1px 10px 5px rgba(169, 169, 169, 0.60), 0 0 3px 1px rgba(169, 169, 169, 0.10);
+}
+
+#typingbox {
 	position: relative;
-	border: solid 1px black;
+	margin-left: 20px;
+	margin-top:800px;
+}
 
+#textbox {
+	height: 43px;
+	font-size: 20px;
+	background-color: beige;
+	color: orange;
+}
+
+#container {
+	padding:0;
+	background-color:black;
+	background-image:url('../img/1411.png');
+	width:100%;
+	height:1200px;
+}
+
+#tools{
+	height:799px;
+	width: 200px;
+	background-color:beige;
+	float: left;
+}
+
+#buttonpanel {
+	position: relative;
+	display: inline-block;
+	margin-top: -400px;
+}
+canvas {
+	float:left;
+	background-color:white;
+	box-shadow: -1px 1px 10px 5px rgba(169, 169, 169, 0.60), 0 0 3px 1px rgba(169, 169, 169, 0.10);
+	
+	
+	border-radius: 0px 0px 0px 10px;
+	color: #8F8D8D;
+	text-shadow: 1px 1px 0 white;
+	font-size: 19px;
+	font-weight: bold;
+	line-height: 32px;
+	font-style: italic;
+	position: relative;
+}
+
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
+#header ul {
+
+}
+
+ul {
+	display: inline-block;
+	list-style: none;
+	margin: 0 auto;
+   }
+
+ul li {
+	float:left;
+	margin-left:20px;
+}
+
+#palette {
+	width: 128px;
+	height: 128px;
+	margin: 0 auto;
+	background-image: url('../img/palette.png');
 }

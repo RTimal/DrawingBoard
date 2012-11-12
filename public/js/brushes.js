@@ -32,13 +32,14 @@
 		context.linecap = "round";
 		context.shadowBlur = 0;
 		context.shadowColor = "yellow";
-		context.globalAlpha = 1;
+		context.globalAlpha = .1;
 		if(eventType == "mousedown") {
 			this.paint = true;
 		}
 
 		if(eventType == "mousemove") {
 			if(this.paint == true) {
+				context.beginPath();
 				context.moveTo(this.prevX, this.prevY);
 				context.lineWidth = this.width;
 				context.strokeStyle = this.color;

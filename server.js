@@ -26,23 +26,21 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.in(u.room).emit('adduser', user);
 	});
 
-	socket.on('leave', function (user) { 
-		socket.leave(user.room);
-		io.sockets.in(user.room).emit('removeuser', user.uid);
+	socket.on('leave', function (uid) {
+		io.sockets.in(users[uid].room).emit('removeuser', uid);
+		socket.leave(users[uid].room);
+		users[uid] = null;
 	 });
 
-	socket.on('mousedown', function (drawevent) { 
-		//io.sockets.in(drawevent.room).emit('mousedown' , drawevent);
+	socket.on('mousedown', function (drawevent) {
 		this.broadcast.to(drawevent.room).emit('mousedown' , drawevent);
 	});
 
 	socket.on('mouseup', function (drawevent) {
-		//io.sockets.in(drawevent.room).emit('mouseup', drawevent);
 		this.broadcast.to(drawevent.room).emit('mouseup' , drawevent);
 	});
 
 	socket.on('mousemove', function (drawevent) {
-		//io.sockets.in(drawevent.room).emit('mousemove', drawevent);
 		this.broadcast.to(drawevent.room).emit('mousemove' , drawevent);
 	});
 
