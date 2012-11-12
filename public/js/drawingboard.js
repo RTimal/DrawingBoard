@@ -73,13 +73,8 @@ DrawingBoard.refresh = function() {
 		}
 }
 
-<<<<<<< HEAD
-DrawingBoard.connectToServer = function () {
-	var socket = io.connect('http://192.168.0.172:81');
-=======
 DrawingBoard.connectToEventsServer = function () {
 	var socket = io.connect('http://localhost:81');
->>>>>>> fa8798a1c99c528675e248fdb86a8c3bc61ec17d
 	this.socket = socket;
 }
 
