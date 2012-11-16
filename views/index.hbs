@@ -2,6 +2,7 @@
 <html>
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.nicescroll.min.js"></script>
 	<script type="text/javascript" src="/js/drawingboard.js"></script>
 	<script type="text/javascript" src="/js/events.js"></script>
 	<script type="text/javascript" src="/js/brushes.js"></script>
@@ -50,9 +51,11 @@
 			<canvas id ="drawingboard" width="900" height="800"></canvas>
 
 			<div id="chattool" class="clearfix">
+				<div id = "chatboard" >
+				</div>
 				<div id="typingbox">
 					<input type ="text" name="textbox" id="textbox"></input>
-					<button class="button green glossy">Send</button>
+					<button id="send" class="button green glossy">Send</button>
 				</div>	
 			</div>
 

@@ -11,7 +11,8 @@ DrawingBoard.initDrawingBoard = function(username) {
 	if(this.room == undefined) {
 	this.room = "Lobby"
 	}
-
+	this.username = "guest";
+	//this.username = prompt("Please enter your chat name", "Guest");
 	userData = {
 		name: this.username, 
 		room: this.room,
@@ -29,11 +30,11 @@ DrawingBoard.initDrawingBoard = function(username) {
 
 	var owner = this.Users.initialize(this.socket, userData);
 	this.users = this.Users.getUsers();
-	this.ownerId = this.Users.getOwnerId();
+	
 
 	this.Chat.initialize(this.chatsocket, owner);
 	
-	this.Events.bindEventHandlers(canvas, this.chatsocket, this.socket, this.ownerId, function() {
+	this.Events.bindEventHandlers(canvas, this.chatsocket, this.socket, owner, function() {
 		self.refresh();
 	}, function(eventType, userID, brushlocation) {
 		self.draw(eventType, userID, brushlocation);

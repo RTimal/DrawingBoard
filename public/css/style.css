@@ -95,7 +95,6 @@ margin-top: 40px;
 #typingbox {
 	position: relative;
 	margin-left: 20px;
-	margin-top:800px;
 }
 
 #textbox {
@@ -183,4 +182,56 @@ ul li {
 	height: 128px;
 	margin: 0 auto;
 	background-image: url('../img/palette.png');
+}
+
+
+.activeButton {
+background-image: -webkit-gradient(radial, 50% 0, 100, 50% 0, 0, from( rgba(255,255,255,0) ), to( rgba(255,255,255,0) )), url(../img/noise.png);
+background-image: -moz-gradient(radial, 50% 0, 100, 50% 0, 0, from( rgba(255,255,255,0) ), to( rgba(255,255,255,0) )), url(noise.png);
+background-image: gradient(radial, 50% 0, 100, 50% 0, 0, from( rgba(255,255,255,0) ), to( rgba(255,255,255,0) )), url(noise.png);
+-webkit-box-shadow: inset rgba(255,255,255,0.6) 0 0.3em .3em, inset rgba(0,0,0,0.2) 0 -0.1em .3em, /* inner shadow */ 
+ rgba(0,0,0,0.4) 0 .1em 1px, /* border */
+ rgba(0,0,0,0.2) 0 .2em 6px;
+-moz-box-shadow: inset rgba(255,255,255,0.6) 0 0.3em .3em, inset rgba(0,0,0,0.2) 0 -0.1em .3em, /* inner shadow */ 
+ rgba(0,0,0,0.4) 0 .1em 1px, /* border */
+ rgba(0,0,0,0.2) 0 .2em 6px;
+box-shadow: inset rgba(255,255,255,0.6) 0 0.3em .3em, inset rgba(0,0,0,0.2) 0 -0.1em .3em, /* inner shadow */ 
+ rgba(0,0,0,0.4) 0 .1em 1px, /* border */
+ rgba(0,0,0,0.2) 0 .2em 6px;
+opacity: .6;
+}
+
+#chatboard {
+	bottom: 0;
+	display: inline-block;
+	width: 90%;
+	height:90%;
+	background-color: white;
+	display: block;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.chatline {
+	width:100%;
+	display: inline;
+	bottom: 0;
+	line-height: 40px;
+	color: black;
+	font-size: 25px;
+	word-wrap: break-word;
+}
+
+.ownername {
+	
+	font-size: 25px;
+	display: inline;
+	color: green;
+	font-weight: bold;
+}
+
+.chatrow {
+
+	background-color: white;
+	margin-bottom: 0;
 }

@@ -15,6 +15,12 @@ DrawingBoard.Events.getMouseEvents = function() {
 }
 
 DrawingBoard.Events.bindDOMEvents = function() {
+
+	var self = this;
+	
+	$('#username #value').text(this.owner.name);
+	$('#room #value').text(this.owner.room);
+
 	$('canvas').mousedown(function(event) {
 		$('#tools').addClass("unselectable");
 		$('#chattool').addClass("unselectable");
@@ -27,14 +33,40 @@ DrawingBoard.Events.bindDOMEvents = function() {
 		$('#chattool').removeClass("unselectable");
 	});
 
+	$('#send').click(function(event){
+		console.log("heey");
+	});
+
+	$('#textbox').keydown(function(event) {
+		if($(this).val()!='') {
+			if(event.keyCode == 13) {
+				var text = $(this).val();
+				$(this).val('');
+				var $msg = $('<div class="chatrow"><span class="ownername">' + self.owner.name + ': </span>'+ '<span class="chatline">'+text+'</span></div>');
+				$('#send').addClass("activeButton");
+				$('#send').trigger("click");
+				$("#chatboard").append($msg);
+				var scrollHeight = $('#chatboard')[0].scrollHeight;
+				$('#chatboard').scrollTop(scrollHeight);
+			}
+		}
+	});
+
+	$('#textbox').keyup(function(event) {
+		if(event.keyCode == 13) {
+			$('#send').removeClass("activeButton");
+		}
+	});
 
 }
 
-DrawingBoard.Events.bindEventHandlers = function(canvas, chatsocket, socket, ownerId, emitEvent, drawCallBack) {
+DrawingBoard.Events.bindEventHandlers = function(canvas, chatsocket, socket, owner, emitEvent, drawCallBack) {
+	this.owner = owner;
 	this.bindDOMEvents();
 	this.mouseEvents = Array();
 	offsetLeft = $(canvas).offset().left;
-	offsetTop = $(canvas).offset().top
+	offsetTop = $(canvas).offset().top;
+
 	var self = this;
 
 	socket.on('mousedown', function (drawevent) { 
@@ -52,19 +84,19 @@ DrawingBoard.Events.bindEventHandlers = function(canvas, chatsocket, socket, own
 	$('canvas').mousedown(function(event) {
 		self.addEvent(event);
 		emitEvent();
-		drawCallBack('mousedown', ownerId, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
+		drawCallBack('mousedown', owner.uid, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
 	});
 
 	$('canvas').mousemove(function(event) {
 		self.addEvent(event);
 		emitEvent();
-		drawCallBack('mousemove', ownerId, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
+		drawCallBack('mousemove', owner.uid, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
 	});
 
 	$('html').mouseup(function(event) {
 		self.addEvent(event);
 		emitEvent();
-		drawCallBack('mouseup', ownerId, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
+		drawCallBack('mouseup', owner.uid, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
 	});
 }
 
