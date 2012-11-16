@@ -12,7 +12,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 	this.room = "Lobby"
 	}
 	this.username = "guest";
-	//this.username = prompt("Please enter your chat name", "Guest");
+	this.username = prompt("Please enter your chat name", "Guest");
 	userData = {
 		name: this.username, 
 		room: this.room,
@@ -29,6 +29,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 	
 
 	var owner = this.Users.initialize(this.socket, userData);
+	this.owner = owner;
 	this.users = this.Users.getUsers();
 	
 
@@ -52,7 +53,7 @@ DrawingBoard.refresh = function() {
 		if(event.type == "mousedown") {
 			this.socket.emit('mousedown', {
 					brushlocation: this.brushlocation,
-					ownerId: this.ownerId,
+					ownerId:this.owner.uid,
 					room: this.room
 				});
 		} 
@@ -60,7 +61,7 @@ DrawingBoard.refresh = function() {
 		if(event.type == "mouseup") {
 			this.socket.emit('mouseup', {
 				brushlocation: this.brushlocation,
-				ownerId: this.ownerId,
+				ownerId:this.owner.uid,
 				room: this.room
 			});
 		}
@@ -68,7 +69,7 @@ DrawingBoard.refresh = function() {
 		if(event.type == "mousemove") {
 				this.socket.emit('mousemove', {
 					brushlocation: this.brushlocation,
-					ownerId: this.ownerId,
+					ownerId:this.owner.uid,
 					room: this.room
 				});
 		}
