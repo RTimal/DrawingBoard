@@ -19,13 +19,7 @@ html {
 }
 
 #header {
-	width:100%;
-	background-color:white;
-	position:fixed;
-	z-index:200;
-	background-image:url('../img/1411.png');
-	box-shadow: 0 1px 5px 1px rgba(169, 169, 169, 0.60), 0 0 3px 1px rgba(169, 169, 169, 0.10);
-	text-align: center;
+margin: 0 auto;
 
 }
 
@@ -40,7 +34,7 @@ html {
    */
    -ms-user-select: none;
    user-select: none;
-	cursor:not-allowed; /*makes it even more obvious*/
+   cursor:not-allowed; /*makes it even more obvious*/
 }
 
 #roomtitle {
@@ -91,7 +85,7 @@ html {
 	width:400px;
 	background-color: white;
 	float:left;
-	height:900px;
+	height:800px;
 	box-shadow: -1px 1px 10px 5px rgba(169, 169, 169, 0.60), 0 0 3px 1px rgba(169, 169, 169, 0.10);
 }
 
@@ -109,7 +103,8 @@ html {
 
 #container {
 	padding:0;
-	width:100%;
+	width:1500px;
+	margin: 0 auto;
 }
 
 #tools{
@@ -122,7 +117,6 @@ html {
 #buttonpanel {
 	position: relative;
 	display: inline-block;
-	margin-top: -400px;
 }
 canvas {
 	float:left;
@@ -205,7 +199,7 @@ opacity: .6;
 	bottom: 0;
 	display: inline-block;
 	width: 90%;
-	height:90%;
+	height: 90%;
 	background-color: white;
 	display: block;
 	margin: 0 auto;

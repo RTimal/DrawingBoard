@@ -18,16 +18,18 @@ DrawingBoard.Events.bindDOMEvents = function() {
 
 	var self = this;
 	
+	$('#textbox').focus();
+
 	$('#username #value').text(this.owner.name);
 	$('#room #value').text(this.owner.room);
 
-	$('canvas').mousedown(function(event) {
+	$('canvas').mousedown(function (event) {
 		$('#tools').addClass("unselectable");
 		$('#chattool').addClass("unselectable");
 		$('#titlebar').addClass("unselectable");
 	});
 
-	$('html').mouseup(function(event) {
+	$('html').mouseup(function (event) {
 		$('#titlebar').removeClass("unselectable");
 		$('#tools').removeClass("unselectable");
 		$('#chattool').removeClass("unselectable");
@@ -58,18 +60,24 @@ DrawingBoard.Events.bindDOMEvents = function() {
 		}
 	});
 
+	$(window).resize(function () {
+		self.canvasOffsetLeft = $(self.canvas).offset().left;
+		self.canvasOffsetTop = $(self.canvas).offset().top; 
+	});
+	
 }
 
 DrawingBoard.Events.bindEventHandlers = function(canvas, chatsocket, socket, owner, emitEvent, drawCallBack) {
+	this.canvas = canvas;
 	this.owner = owner;
 	this.bindDOMEvents();
 	this.mouseEvents = Array();
-	offsetLeft = $(canvas).offset().left;
-	offsetTop = $(canvas).offset().top;
-
 	var self = this;
 
-	socket.on('mousedown', function (drawevent) { 
+	this.canvasOffsetLeft = $(this.canvas).offset().left;
+	this.canvasOffsetTop = $(this.canvas).offset().top;
+
+	socket.on('mousedown', function (drawevent) {
 		drawCallBack('mousedown', drawevent.ownerId, drawevent.brushlocation);
 	});
 
@@ -78,25 +86,25 @@ DrawingBoard.Events.bindEventHandlers = function(canvas, chatsocket, socket, own
 	});
 
 	socket.on('mousemove', function (drawevent) {
-		drawCallBack('mousemove', drawevent.ownerId, drawevent.brushlocation );
+		drawCallBack('mousemove', drawevent.ownerId, drawevent.brushlocation);
 	});
 
 	$('canvas').mousedown(function(event) {
 		self.addEvent(event);
 		emitEvent();
-		drawCallBack('mousedown', owner.uid, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
+		drawCallBack('mousedown', owner.uid, {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop});
 	});
 
 	$('canvas').mousemove(function(event) {
 		self.addEvent(event);
 		emitEvent();
-		drawCallBack('mousemove', owner.uid, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
+		drawCallBack('mousemove', owner.uid, {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop});
 	});
 
 	$('html').mouseup(function(event) {
 		self.addEvent(event);
 		emitEvent();
-		drawCallBack('mouseup', owner.uid, {x:event.pageX - offsetLeft, y:event.pageY - offsetTop});
+		drawCallBack('mouseup', owner.uid, {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop});
 	});
 }
 

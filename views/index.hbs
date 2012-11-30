@@ -18,11 +18,21 @@
 </head>
 <body>
 	<div id="container">
+		<div id="header">
+			<div id ="buttonpanel">
+				<ul>
+					<li><button class="button pink glass round" data-icon="☺">Invite a Friend</button></li>
+					<li><button class="button green glossy round" data-icon="➥">Create Room </button></li>
+					<li><button class="button orange glass round" data-icon="▦">View Gallery</button></li>
+				</ul>
+			</div>
+		</div>
 
 		<div id="components">
-
+			
 		<div id="drawingtool" class="clearfix">
-			<div id="titlebar">
+			<div id="titlebar" class="clearfix">
+
 
 				<div id="roomtitle">
 					Room:
@@ -39,16 +49,20 @@
 				</div>
 			
 			</div>
-						<div id="tools">
+
+			<canvas id ="drawingboard" width="900" height="800"></canvas>
+
+			<div id="tools">
 				<div id="palette">
-					
 				</div>
+
 				<div id="buttons">
 					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="➥">Save Image</button>
 					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="✎">Publish to gallery</button>
 				</div>
+
 			</div>
-			<canvas id ="drawingboard" width="900" height="800"></canvas>
+
 
 			<div id="chattool" class="clearfix">
 				<div id = "chatboard" >
@@ -59,14 +73,6 @@
 				</div>	
 			</div>
 
-
-					<div id ="buttonpanel">
-			<ul>
-				<li><button class="button pink glass round" data-icon="☺">Invite a Friend</button></li>
-				<li><button class="button green glossy round" data-icon="➥">Create Room </button></li>
-				<li><button class="button orange glass round" data-icon="▦">View Gallery</button></li>
-			</ul>
-		</div>
 
 		</div>
 
