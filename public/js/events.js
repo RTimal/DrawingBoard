@@ -1,7 +1,7 @@
 var DrawingBoard = DrawingBoard || {};
 DrawingBoard.Events = DrawingBoard.Events || {};
 
-DrawingBoard.Events.bindEventHandlers = function (canvas, socket, owner, emitEvent, drawCallBack, chatCallback) {
+DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, owner, emitEvent, drawCallBack, chatCallback) {
 	this.canvas = canvas;
 	this.owner = owner;
 	this.bindDOMEvents();
@@ -75,11 +75,12 @@ DrawingBoard.Events.bindDOMEvents = function() {
 DrawingBoard.Events.bindChatEvents = function (chatCallback) {
 
 	var self = this;
-	
+		
 	$('#send').mouseup(function (event) {
 		$('#textbox').focus();
+		var message = { m: $('#textbox').val(), uid: this.owner.uid };
 		if($('#textbox').val()!='') {
-			chatCallback();
+			chatCallback(message);
 		}
 	});
 
@@ -93,10 +94,15 @@ DrawingBoard.Events.bindChatEvents = function (chatCallback) {
 		if(event.keyCode == 13) {
 			$('#send').removeClass("activeButton");
 			if($(this).val()!='') {
-				chatCallback();	
+				var message = { m: $('#textbox').val(), uid: this.owner.uid };
+				chatCallback(message);
 			}
 		}
 	});
+
+	this.chatsocket.on('chatmessage', function (message) {
+		chatCallback(message);
+	}
 
 }
 

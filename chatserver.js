@@ -23,7 +23,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('chatmessage', function (message) {
-		this.broadcast.to(users[message.uid].room).emit('message', message.data);
+		this.broadcast.to(users[message.uid].room).emit('chatmessage', message);
 	});
 
 	socket.on('leave', function (data) {

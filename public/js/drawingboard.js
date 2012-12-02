@@ -34,9 +34,9 @@ DrawingBoard.initDrawingBoard = function(username) {
 	this.users = this.Users.getUsers();
 	
 
-	this.Chat.initialize(this.chatsocket, owner);
+	this.Chat.initialize(this.chatsocket, owner, this.users);
 	
-	this.Events.bindEventHandlers(canvas, this.socket, owner,
+	this.Events.bindEventHandlers(canvas, this.socket, this.chatsocket, owner,
 	 	//callback for emitting events
 		function() {
 			self.refresh();
