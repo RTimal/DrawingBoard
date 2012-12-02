@@ -9,8 +9,9 @@ DrawingBoard.Chat.initialize = function(chatsocket, owner, users) {
 }
 
 DrawingBoard.Chat.sendChatMessage = function(message) {
+	console.log(message);
 	var text = $('#textbox').val();
-	if(message.uid = this.owner.uid) {
+	if(message.uid == this.owner.uid) {
 		this.sendToSelf(message);
 		this.sendToOthers(message);
 		$('#textbox').focus();

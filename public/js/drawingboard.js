@@ -46,8 +46,8 @@ DrawingBoard.initDrawingBoard = function(username) {
 			self.draw(eventType, userID, brushlocation);
 		}, 
 		//callback for sending chat messages
-		function() {
-			self.Chat.sendChatMessage();
+		function(message) {
+			self.Chat.sendChatMessage(message);
 		});
 }
 
