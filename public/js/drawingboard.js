@@ -13,14 +13,15 @@ DrawingBoard.initDrawingBoard = function(username) {
 	}
 	this.username = "guest";
 	this.username = prompt("Please enter your chat name", "Guest");
+
 	userData = {
 		name: this.username, 
 		room: this.room,
 		provider: "drawingboard",
 		brushData: {
 			brushName: "line",
-			brushColor: "green",
-			brushWidth: 3.0
+			brushColor: "orange",
+			brushWidth: 1,
 		}
 	}
 
@@ -35,11 +36,19 @@ DrawingBoard.initDrawingBoard = function(username) {
 
 	this.Chat.initialize(this.chatsocket, owner);
 	
-	this.Events.bindEventHandlers(canvas, this.chatsocket, this.socket, owner, function() {
-		self.refresh();
-	}, function(eventType, userID, brushlocation) {
-		self.draw(eventType, userID, brushlocation);
-	});
+	this.Events.bindEventHandlers(canvas, this.socket, owner,
+	 	//callback for emitting events
+		function() {
+			self.refresh();
+		}, 
+		//callback for drawing
+		function(eventType, userID, brushlocation) {
+			self.draw(eventType, userID, brushlocation);
+		}, 
+		//callback for sending chat messages
+		function() {
+			self.Chat.sendChatMessage();
+		});
 }
 
 DrawingBoard.setBrushLocation = function(brushlocation) {

@@ -62,7 +62,7 @@ DrawingBoard.Users.addUser = function(user) {
 	this.users[user.uid.toString()] = user;
 }
 
-DrawingBoard.Users.displayUsers = function () {
+DrawingBoard.Users.displayUsers = function() {
 	//loop through users, add each name to dom
 }
 
@@ -70,6 +70,6 @@ DrawingBoard.Users.refreshList = function() {
 	//repopulate list from server
 }
 
-DrawingBoard.Users.removeUsersFromList = function (id) {
+DrawingBoard.Users.removeUsersFromList = function(id) {
 	//remove user id from dom
 }

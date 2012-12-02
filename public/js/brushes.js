@@ -4,7 +4,7 @@
 		subclass.prototype = prototypeObject;
 	}
 
-	function Brush(color, width) {
+	function Brush (color, width) {
 		this.color = color;
 		this.width = width;
 	}
@@ -33,12 +33,13 @@
 		context.shadowBlur = 0;
 		context.shadowColor = "yellow";
 		context.globalAlpha = 1;
-		if(eventType == "mousedown") {
+		
+		if ( eventType == "mousedown" ) {
 			this.paint = true;
 		}
 
-		if(eventType == "mousemove") {
-			if(this.paint == true) {
+		if ( eventType == "mousemove" ) {
+			if ( this.paint == true ) {
 				context.beginPath();
 				context.moveTo(this.prevX, this.prevY);
 				context.lineWidth = this.width;
@@ -48,7 +49,7 @@
 			}
 		}
 
-		if(eventType == "mouseup") {
+		if ( eventType == "mouseup" ) {
 			this.paint = false;
 		}
 

@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/public'));
 
 server.listen(82)
 
-io.sockets.on('connection', function (socket){
+io.sockets.on('connection', function (socket) {
 	
 	socket.on('join', function (user) {
 		u = JSON.parse(user);
@@ -23,7 +23,7 @@ io.sockets.on('connection', function (socket){
 	});
 
 	socket.on('chatmessage', function (message) {
-		this.broadcast.to(users[message.uid].room).emit(message.data);
+		this.broadcast.to(users[message.uid].room).emit('message', message.data);
 	});
 
 	socket.on('leave', function (data) {
