@@ -29,14 +29,15 @@
 	inherit(Brush, lineBrush);
 
 	lineBrush.prototype.drawToCanvas = function(eventLocation, context, eventType) {
-		context.globalAlpha = .1;
+		context.globalAlpha = 1;
+		//context.lineCap = "round";
 		if ( eventType == "mousedown" ) {
 			this.paint = true;
 		}
 
 		if ( eventType == "mousemove" ) {
 			if ( this.paint == true ) {
-				//context.beginPath();
+				context.beginPath();
 				console.log("Moving To"  + this.prevX + "," + this.prevY);
 				context.moveTo(this.prevX, this.prevY);
 				context.lineWidth = this.width;
@@ -44,7 +45,7 @@
 				console.log("Line to" + eventLocation.x + " ," + eventLocation.y)
 				context.lineTo(eventLocation.x, eventLocation.y);	
 				context.stroke();
-				//context.closePath();
+				context.closePath();
 			}
 		}
 

@@ -21,7 +21,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		brushData: {
 			brushName: "line",
 			brushColor: "orange",
-			brushWidth: 10,
+			brushWidth: 4,
 		}
 	}
 
