@@ -21,7 +21,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		brushData: {
 			brushName: "line",
 			brushColor: "orange",
-			brushWidth: 1,
+			brushWidth: 10,
 		}
 	}
 
@@ -38,8 +38,8 @@ DrawingBoard.initDrawingBoard = function(username) {
 	
 	this.Events.bindEventHandlers(canvas, this.socket, this.chatsocket, owner,
 	 	//callback for emitting events
-		function() {
-			self.refresh();
+		function(location) {
+			self.refresh(location);
 		}, 
 		//callback for drawing
 		function(eventType, userID, brushlocation) {
@@ -55,13 +55,12 @@ DrawingBoard.setBrushLocation = function(brushlocation) {
 	this.brushlocation = brushlocation;
 }
 
-DrawingBoard.refresh = function() {
+DrawingBoard.refresh = function(location) {
 		var event = this.Events.getNextMouseEvent();
-		this.setBrushLocation({x:event.pageX - this.canvas.offsetLeft, y:event.pageY - this.canvas.offsetTop});
 
 		if(event.type == "mousedown") {
 			this.socket.emit('mousedown', {
-					brushlocation: this.brushlocation,
+					brushlocation: location,
 					ownerId:this.owner.uid,
 					room: this.room
 				});
@@ -69,7 +68,7 @@ DrawingBoard.refresh = function() {
 
 		if(event.type == "mouseup") {
 			this.socket.emit('mouseup', {
-				brushlocation: this.brushlocation,
+				brushlocation: location,
 				ownerId:this.owner.uid,
 				room: this.room
 			});
@@ -77,7 +76,7 @@ DrawingBoard.refresh = function() {
 
 		if(event.type == "mousemove") {
 				this.socket.emit('mousemove', {
-					brushlocation: this.brushlocation,
+					brushlocation: location,
 					ownerId:this.owner.uid,
 					room: this.room
 				});

@@ -5,7 +5,7 @@ var express = require('express'),
 	hbs = require('express-hbs'),
 	users = {};
 
-io.set('log level', 1);
+//io.set('log level', 1);
 app.engine('hbs', hbs.express3({partialsDir: __dirname + '/views/partials'}));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');

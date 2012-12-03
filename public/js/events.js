@@ -27,20 +27,23 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 
 	$('canvas').mousedown(function(event) {
 		self.addEvent(event);
-		emitEvent();
-		drawCallBack('mousedown', owner.uid, {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop});
+		var canvasLocation = {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop};
+		emitEvent(canvasLocation);
+		drawCallBack('mousedown', owner.uid, canvasLocation);
 	});
 
 	$('canvas').mousemove(function(event) {
 		self.addEvent(event);
-		emitEvent();
-		drawCallBack('mousemove', owner.uid, {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop});
+		var canvasLocation = {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop};
+		emitEvent(canvasLocation);
+		drawCallBack('mousemove', owner.uid, canvasLocation);
 	});
 
 	$('html').mouseup(function(event) {
 		self.addEvent(event);
-		emitEvent();
-		drawCallBack('mouseup', owner.uid, {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop});
+		var canvasLocation = {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop};
+		emitEvent(canvasLocation);
+		drawCallBack('mouseup', owner.uid, canvasLocation);
 	});
 }
 

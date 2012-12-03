@@ -29,28 +29,28 @@
 	inherit(Brush, lineBrush);
 
 	lineBrush.prototype.drawToCanvas = function(eventLocation, context, eventType) {
-		context.linecap = "round";
-		context.shadowBlur = 0;
-		context.shadowColor = "yellow";
-		context.globalAlpha = 1;
-		
+		context.globalAlpha = .1;
 		if ( eventType == "mousedown" ) {
 			this.paint = true;
 		}
 
 		if ( eventType == "mousemove" ) {
 			if ( this.paint == true ) {
-				context.beginPath();
+				//context.beginPath();
+				console.log("Moving To"  + this.prevX + "," + this.prevY);
 				context.moveTo(this.prevX, this.prevY);
 				context.lineWidth = this.width;
 				context.strokeStyle = this.color;
+				console.log("Line to" + eventLocation.x + " ," + eventLocation.y)
 				context.lineTo(eventLocation.x, eventLocation.y);	
 				context.stroke();
+				//context.closePath();
 			}
 		}
 
 		if ( eventType == "mouseup" ) {
 			this.paint = false;
+		
 		}
 
 		this.prevX = eventLocation.x;
