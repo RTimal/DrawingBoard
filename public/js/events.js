@@ -48,6 +48,13 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 }
 
 DrawingBoard.Events.bindDOMEvents = function() {
+	$('#gallerybutton').mouseup(function (event) {
+		window.open("/gallery", '_self', false);
+	});
+
+	$('#backbutton').mouseup(function (event) {
+		window.open("/", '_self', false);
+	});
 
 	var self = this;
 	

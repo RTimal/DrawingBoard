@@ -12,6 +12,7 @@ width: 100%;
 
 html {
 	background-image:url('../img/1411.png');
+	background-color: black;
 }
 
 #border {
@@ -228,4 +229,8 @@ opacity: .6;
 
 	background-color: white;
 	margin-bottom: 0;
+}
+
+#gallerybutton {
+
 }
