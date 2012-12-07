@@ -80,6 +80,21 @@ DrawingBoard.Events.bindDOMEvents = function() {
 		self.canvasOffsetLeft = $(self.canvas).offset().left;
 		self.canvasOffsetTop = $(self.canvas).offset().top; 
 	});
+
+
+	var self = this;
+
+	$("#picker").spectrum({
+		showAlpha: true,
+		clickoutFiresChange: true,
+		flat: true,
+		showInput: true,
+		preferredFormat: "rgb",
+		move: function(tinycolor) {
+			console.log("move");
+			console.log(tinycolor.toRgb());
+		}
+	});
 	
 }
 
@@ -99,6 +114,7 @@ DrawingBoard.Events.bindChatEvents = function (chatCallback) {
 		if(event.keyCode == 13) {
 			$('#send').addClass("activeButton");
 		}
+
 	});
 
 	$('#textbox').keyup(function (event) {
@@ -109,7 +125,11 @@ DrawingBoard.Events.bindChatEvents = function (chatCallback) {
 				chatCallback(message);
 			}
 		}
+		event.cancelBubble = true;
+		event.returnValue = false;
+		event.stopPropagation();
 	});
+
 
 	this.chatsocket.on('chatmessage', function (message) {
 		chatCallback(message);

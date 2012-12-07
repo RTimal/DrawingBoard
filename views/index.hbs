@@ -11,8 +11,10 @@
 	<script type="text/javascript" src="/js/utils.js"></script>
 	<script type="text/javascript" src="/js/chat.js"></script>
 	<script type="text/javascript" src="/js/socket.io.js"></script>
+	<script type="text/javascript" src="/js/spectrum.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/buttons.css">
+	<link rel="stylesheet" type="text/css" href="/css/spectrum.css">
 	<script>
 	</script>
 </head>
@@ -54,10 +56,14 @@
 
 			<canvas id ="drawingboard" width="900" height="800"></canvas>
 
-			<div id="tools">
+			<div id="tools" style ="text-align:center;">
+
+				<!--
 				<div id="palette">
 				</div>
+				-->
 
+				<input type="text" id="picker">
 				<div id="buttons">
 					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="➥">Save Image</button>
 					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="✎">Publish to gallery</button>
