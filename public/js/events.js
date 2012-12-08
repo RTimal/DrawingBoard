@@ -63,7 +63,7 @@ DrawingBoard.Events.bindDOMEvents = function() {
 	$('#username #value').text(this.owner.name);
 	$('#room #value').text(this.owner.room);
 
-	$('canvas').mousedown(function (event) {
+	$('#drawingboard').mousedown(function (event) {
 		$('#tools').addClass("unselectable");
 		$('#chattool').addClass("unselectable");
 		$('#titlebar').addClass("unselectable");

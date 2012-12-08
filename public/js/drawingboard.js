@@ -3,6 +3,9 @@ var DrawingBoard = DrawingBoard || {};
 DrawingBoard.initDrawingBoard = function(username) {
 	var canvas = document.getElementById("drawingboard");
 	var context = canvas.getContext("2d");
+	this.brushViewContext = document.getElementById("brush").getContext("2d");
+	this.brushViewContext.canvas.width = 200;
+	this.brushViewContext.canvas.height = 200;
 	this.brushlocation = {x:0, y:0};
 	this.context = context;
 	this.canvas = canvas;
@@ -21,15 +24,17 @@ DrawingBoard.initDrawingBoard = function(username) {
 		brushData: {
 			brushName: "line",
 			brushColor: "teal",
-			brushWidth: 4,
+			brushWidth: 20,
 		}
 	}
 
 	this.connectToEventsServer();
 	this.connectToChatServer();
-	
 
-	var owner = this.Users.initialize(this.socket, userData);
+	var owner = this.Users.initialize(this.socket, userData, function () {
+		self.drawCurrentBrush();
+	});
+
 	this.owner = owner;
 	this.users = this.Users.getUsers();
 	
@@ -38,15 +43,15 @@ DrawingBoard.initDrawingBoard = function(username) {
 	
 	this.Events.bindEventHandlers(canvas, this.socket, this.chatsocket, owner,
 	 	//callback for emitting events
-		function(location) {
+		function (location) {
 			self.refresh(location);
 		}, 
 		//callback for drawing
-		function(eventType, userID, brushlocation) {
+		function (eventType, userID, brushlocation) {
 			self.draw(eventType, userID, brushlocation);
 		}, 
 		//callback for sending chat messages
-		function(message) {
+		function (message) {
 			self.Chat.sendChatMessage(message);
 		});
 }
@@ -101,9 +106,14 @@ DrawingBoard.setBrush = function(brush) {
 	this.activeBrush = brush;
 }
 
+DrawingBoard.drawCurrentBrush = function() {
+	var thisuser = this.users[this.owner.uid];
+	thisuser.brush.drawCurrentBrush(this.brushViewContext);
+}
+
 DrawingBoard.draw = function(eventType, userID, brushlocation) {
 	if(this.users[userID]!=null) {
-		var thisuser = this.users[userID];
-		thisuser.brush.drawToCanvas(brushlocation, this.context, eventType);
+		var user = this.users[userID];
+		user.brush.drawToCanvas(brushlocation, this.context, eventType);
 	}
 }
