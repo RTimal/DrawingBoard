@@ -1,11 +1,11 @@
 var DrawingBoard = DrawingBoard || {};
 DrawingBoard.Events = DrawingBoard.Events || {};
 
-DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, owner, emitEvent, drawCallBack, chatCallback) {
+DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, owner, emitEvent, drawCallBack, chatCallback, changeBrushColorCallBack) {
 	this.chatsocket = chatsocket;
 	this.canvas = canvas;
 	this.owner = owner;
-	this.bindDOMEvents();
+	this.bindDOMEvents(changeBrushColorCallBack);
 	this.bindChatEvents(chatCallback);
 	this.mouseEvents = Array();
 	var self = this;
@@ -47,7 +47,7 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 	});
 }
 
-DrawingBoard.Events.bindDOMEvents = function() {
+DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
 	$('#gallerybutton').mouseup(function (event) {
 		window.open("/gallery", '_self', false);
 	});
@@ -91,8 +91,9 @@ DrawingBoard.Events.bindDOMEvents = function() {
 		showInput: true,
 		preferredFormat: "rgb",
 		move: function(tinycolor) {
-			console.log("move");
-			console.log(tinycolor.toRgb());
+			//change the brush color locally for this user, draw the brush again
+			//change the brush over network to this brush
+			changeBrushColorCallBack(tinycolor.toRgb());
 		}
 	});
 	

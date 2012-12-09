@@ -30,7 +30,7 @@
 
 	lineBrush.prototype.drawToCanvas = function(eventLocation, context, eventType) {
 		context.globalAlpha = 1;
-		context.lineCap = "none";
+		context.lineCap = "butt";
 
 		if ( eventType == "mousedown" ) {
 

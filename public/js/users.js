@@ -59,6 +59,12 @@ DrawingBoard.Users.getOwnerId = function () {
 
 DrawingBoard.Users.addUser = function(user, drawBrushCallback) {
 	this.generateUserBrush(user);
+	user.draw = function(brushlocation, context, eventType) {
+		this.brush.drawToCanvas(brushlocation, context, eventType);
+	}
+	user.changeBrushColor = function(color) {
+		var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
+	}
 	this.users[user.uid.toString()] = user;
 	if(user.uid == this.ownerID) {
 		drawBrushCallback();

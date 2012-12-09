@@ -119,7 +119,7 @@ margin: 0 auto;
 	position: relative;
 	display: inline-block;
 }
-canvas {
+canvas#drawingboard {
 	float:left;
 	background-color:white;
 	box-shadow: -1px 1px 10px 5px rgba(169, 169, 169, 0.60), 0 0 3px 1px rgba(169, 169, 169, 0.10);
@@ -237,4 +237,9 @@ opacity: .6;
 
 #brush {
 	border-radius: 5px;
+}
+
+#brushcanvas {
+width:100%;
+text-align: center;
 }

@@ -1,14 +1,7 @@
 var DrawingBoard = DrawingBoard || {};
 
 DrawingBoard.initDrawingBoard = function(username) {
-	var canvas = document.getElementById("drawingboard");
-	var context = canvas.getContext("2d");
-	this.brushViewContext = document.getElementById("brush").getContext("2d");
-	this.brushViewContext.canvas.width = 200;
-	this.brushViewContext.canvas.height = 200;
-	this.brushlocation = {x:0, y:0};
-	this.context = context;
-	this.canvas = canvas;
+	this.initializeCanvases();
 	var self = this;
 	this.room = this.Utils.getParam("room");
 	if(this.room == undefined) {
@@ -41,7 +34,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 
 	this.Chat.initialize(this.chatsocket, owner, this.users);
 	
-	this.Events.bindEventHandlers(canvas, this.socket, this.chatsocket, owner,
+	this.Events.bindEventHandlers(this.canvas, this.socket, this.chatsocket, owner,
 	 	//callback for emitting events
 		function (location) {
 			self.refresh(location);
@@ -53,7 +46,22 @@ DrawingBoard.initDrawingBoard = function(username) {
 		//callback for sending chat messages
 		function (message) {
 			self.Chat.sendChatMessage(message);
+		},
+
+		function (color) {
+			self.changeBrushColor(color);
 		});
+}
+
+DrawingBoard.initializeCanvases = function() {
+	var canvas = document.getElementById("drawingboard");
+	var context = canvas.getContext("2d");
+	this.brushViewContext = document.getElementById("brush").getContext("2d");
+	this.brushViewContext.canvas.width = 100;
+	this.brushViewContext.canvas.height = 100;
+	this.brushlocation = {x:0, y:0};
+	this.context = context;
+	this.canvas = canvas;
 }
 
 DrawingBoard.setBrushLocation = function(brushlocation) {
@@ -106,6 +114,12 @@ DrawingBoard.setBrush = function(brush) {
 	this.activeBrush = brush;
 }
 
+DrawingBoard.changeBrushColor = function(color) {
+	var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
+	this.users[this.owner.uid].brush.color = c;
+	this.drawCurrentBrush();
+}
+
 DrawingBoard.drawCurrentBrush = function() {
 	var thisuser = this.users[this.owner.uid];
 	thisuser.brush.drawCurrentBrush(this.brushViewContext);
@@ -114,6 +128,6 @@ DrawingBoard.drawCurrentBrush = function() {
 DrawingBoard.draw = function(eventType, userID, brushlocation) {
 	if(this.users[userID]!=null) {
 		var user = this.users[userID];
-		user.brush.drawToCanvas(brushlocation, this.context, eventType);
+		user.draw(brushlocation, this.context, eventType);
 	}
 }
