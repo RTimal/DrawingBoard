@@ -47,6 +47,8 @@ DrawingBoard.Users.generateUserBrush = function(user) {
 	var brushName = user.brushData.brushName;
 	var brushFunc = brushName+"Brush";
 	user.brush = new window[brushFunc](user.brushData);
+	console.log(user.brushData.brushColor);
+	user.changeBrushColor(user.brushData.brushColor);
 }
 
 DrawingBoard.Users.changeUserBrush = function(brushData, uid) {
@@ -58,13 +60,21 @@ DrawingBoard.Users.getOwnerId = function () {
 }
 
 DrawingBoard.Users.addUser = function(user, drawBrushCallback) {
-	this.generateUserBrush(user);
+
 	user.draw = function(brushlocation, context, eventType) {
 		this.brush.drawToCanvas(brushlocation, context, eventType);
 	}
+
 	user.changeBrushColor = function(color) {
-		var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
+		this.brush.setColor(color);
 	}
+
+	user.drawCurrentBrush = function(context) {
+		this.brush.drawCurrentBrush(context);
+	}
+
+	this.generateUserBrush(user);
+
 	this.users[user.uid.toString()] = user;
 	if(user.uid == this.ownerID) {
 		drawBrushCallback();

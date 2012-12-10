@@ -45,6 +45,10 @@ io.sockets.on('connection', function (socket) {
 		this.broadcast.to(drawevent.room).emit('mousemove' , drawevent);
 	});
 
+	socket.on('changebrushcolor', function (colorinfo) {
+		users[colorinfo.uid].brushData.brushColor = colorinfo.c;
+		this.broadcast.to(users[colorinfo.uid].room).emit('changebrushcolor', colorinfo);
+	})
 });
 
 app.get('/', function (req, res) {

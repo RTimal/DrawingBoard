@@ -16,7 +16,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		provider: "drawingboard",
 		brushData: {
 			brushName: "line",
-			brushColor: "teal",
+			brushColor: "rgb(230, 51, 51)",
 			brushWidth: 20,
 		}
 	}
@@ -48,9 +48,16 @@ DrawingBoard.initDrawingBoard = function(username) {
 			self.Chat.sendChatMessage(message);
 		},
 
-		function (color) {
-			self.changeBrushColor(color);
+		function (color, uid) {
+			self.changeBrushColor(color, uid);
+			if(uid == self.owner.uid) { 
+				self.emitBrushColor(color, uid);
+			}
 		});
+}
+
+DrawingBoard.emitBrushColor = function(color, id) {
+	this.socket.emit('changebrushcolor',  {c: color, uid: id});
 }
 
 DrawingBoard.initializeCanvases = function() {
@@ -114,15 +121,17 @@ DrawingBoard.setBrush = function(brush) {
 	this.activeBrush = brush;
 }
 
-DrawingBoard.changeBrushColor = function(color) {
-	var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
-	this.users[this.owner.uid].brush.color = c;
-	this.drawCurrentBrush();
+DrawingBoard.changeBrushColor = function(color, uid) {
+	var user = this.users[uid];
+	user.changeBrushColor(color);
+	if(uid == this.owner.uid) {
+		this.drawCurrentBrush(this.brushViewContext);
+	}
 }
 
 DrawingBoard.drawCurrentBrush = function() {
 	var thisuser = this.users[this.owner.uid];
-	thisuser.brush.drawCurrentBrush(this.brushViewContext);
+	thisuser.drawCurrentBrush(this.brushViewContext);
 }
 
 DrawingBoard.draw = function(eventType, userID, brushlocation) {

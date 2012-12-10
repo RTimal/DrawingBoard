@@ -25,6 +25,10 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 		drawCallBack('mousemove', drawevent.ownerId, drawevent.brushlocation);
 	});
 
+	socket.on('changebrushcolor', function (data) {
+		changeBrushColorCallBack(data.c, data.uid);
+	});
+
 	$('canvas').mousedown(function(event) {
 		self.addEvent(event);
 		var canvasLocation = {x:event.pageX - self.canvasOffsetLeft, y:event.pageY - self.canvasOffsetTop};
@@ -45,6 +49,8 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 		emitEvent(canvasLocation);
 		drawCallBack('mouseup', owner.uid, canvasLocation);
 	});
+
+
 }
 
 DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
@@ -81,9 +87,6 @@ DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
 		self.canvasOffsetTop = $(self.canvas).offset().top; 
 	});
 
-
-	var self = this;
-
 	$("#picker").spectrum({
 		showAlpha: true,
 		clickoutFiresChange: true,
@@ -93,7 +96,9 @@ DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
 		move: function(tinycolor) {
 			//change the brush color locally for this user, draw the brush again
 			//change the brush over network to this brush
-			changeBrushColorCallBack(tinycolor.toRgb());
+			var color = tinycolor.toRgb();
+			var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
+			changeBrushColorCallBack(c, self.owner.uid);
 		}
 	});
 	
