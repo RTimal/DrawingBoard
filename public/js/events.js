@@ -54,6 +54,18 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 }
 
 DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
+
+	$('#slider').slider({
+		min:1, 
+		max:30, 
+		disabled:false, 
+		animate: true, 
+		step:1,
+		slide: function(event, ui) {
+			console.log(ui.value);
+		}
+	});
+
 	$('#gallerybutton').mouseup(function (event) {
 		window.open("/gallery", '_self', false);
 	});

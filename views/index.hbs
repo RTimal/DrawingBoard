@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" src="/js/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	<script type ="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script type="text/javascript" src="/js/drawingboard.js"></script>
 	<script type="text/javascript" src="/js/events.js"></script>
 	<script type="text/javascript" src="/js/brushes.js"></script>
@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/buttons.css">
 	<link rel="stylesheet" type="text/css" href="/css/spectrum.css">
+	 <link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<script>
 	</script>
 </head>
@@ -67,6 +68,7 @@
 				<div id="brushcanvas">
 					<canvas id ="brush"></canvas>
 				</div>
+				<div id="slider"></div>
 				<div id="buttons">
 					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="➥">Save Image</button>
 					<button class="button blue glossy round disabled" onselectstart="return false" data-icon="✎">Publish to gallery</button>
