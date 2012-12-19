@@ -47,8 +47,8 @@ DrawingBoard.Users.generateUserBrush = function(user) {
 	var brushName = user.brushData.brushName;
 	var brushFunc = brushName+"Brush";
 	user.brush = new window[brushFunc](user.brushData);
-	console.log(user.brushData.brushColor);
 	user.changeBrushColor(user.brushData.brushColor);
+	user.changeBrushWidth(user.brushData.brushWidth);
 }
 
 DrawingBoard.Users.changeUserBrush = function(brushData, uid) {

@@ -25,8 +25,12 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 		drawCallBack('mousemove', drawevent.ownerId, drawevent.brushlocation);
 	});
 
-	socket.on('changebrushcolor', function (data) {
-		changeBrushColorCallBack(data.c, data.uid);
+	socket.on('changebrushcolor', function (colorinfo) {
+		changeBrushColorCallBack(colorinfo.c, colorinfo.uid);
+	});
+
+	socket.on('changebrushwidth', function (widthinfo) {
+		changeBrushWidthCallBack(widthinfo.w, widthinfo.uid);
 	});
 
 	$('canvas').mousedown(function(event) {

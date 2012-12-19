@@ -17,7 +17,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		brushData: {
 			brushName: "line",
 			brushColor: "rgb(230, 51, 51)",
-			brushWidth: 20,
+			brushWidth: 1,
 		}
 	}
 
@@ -136,19 +136,18 @@ DrawingBoard.refresh = function(location) {
 }
 
 DrawingBoard.connectToEventsServer = function () {
-	var socket = io.connect('http://192.168.1.12:81');
+	var socket = io.connect('http://localhost:81');
 	this.socket = socket;
 }
 
 DrawingBoard.connectToChatServer = function () {
-	var chatsocket = io.connect('http://192.168.1.12:82');
+	var chatsocket = io.connect('http://localhost:82');
 	this.chatsocket = chatsocket;
 }
 
 DrawingBoard.setBrush = function(brush) {
 	this.activeBrush = brush;
 }
-
 
 DrawingBoard.drawCurrentBrush = function() {
 	var thisuser = this.users[this.owner.uid];

@@ -49,6 +49,11 @@ io.sockets.on('connection', function (socket) {
 		users[colorinfo.uid].brushData.brushColor = colorinfo.c;
 		this.broadcast.to(users[colorinfo.uid].room).emit('changebrushcolor', colorinfo);
 	})
+
+	socket.on('changebrushwidth', function (widthinfo) {
+		users[widthinfo.uid].brushData.brushWidth = widthinfo.w;
+		this.broadcast.to(users[widthinfo.uid].room).emit('changebrushwidth', widthinfo);
+	})
 });
 
 app.get('/', function (req, res) {

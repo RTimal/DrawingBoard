@@ -57,6 +57,7 @@
 	}
 
 	lineBrush.prototype.drawCurrentBrush =  function(context) {
+		context.canvas.width = context.canvas.width;
 		context.beginPath();
 		context.strokeStyle = this.color;
 		context.lineWidth = this.width;
