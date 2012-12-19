@@ -69,6 +69,10 @@ DrawingBoard.Users.addUser = function(user, drawBrushCallback) {
 		this.brush.setColor(color);
 	}
 
+	user.changeBrushWidth = function (width) {
+		this.brush.setWidth(width);
+	}
+
 	user.drawCurrentBrush = function(context) {
 		this.brush.drawCurrentBrush(context);
 	}

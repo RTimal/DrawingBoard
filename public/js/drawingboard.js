@@ -41,7 +41,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		}, 
 		//callback for drawingnd over
 		function (eventType, userID, brushlocation) {
-			self.draw(eventType, userID, brushlocation);
+			self.draw(eventType, userID, brushlocation)
 		}, 
 		//callback for sending chat messages
 		function (message) {
@@ -53,11 +53,14 @@ DrawingBoard.initDrawingBoard = function(username) {
 			if(uid == self.owner.uid) { 
 				self.emitBrushColor(color, uid);
 			}
+		},
+		//callback for changing brush size locally and over network
+		function (width, uid) {
+			self.changeBrushWidth(width, uid);
+			if(uid == self.owner.uid) {
+				self.emitBrushWidth(width, uid);
+			}
 		});
-}
-
-DrawingBoard.emitBrushColor = function(color, id) {
-	this.socket.emit('changebrushcolor',  {c: color, uid: id});
 }
 
 DrawingBoard.initializeCanvases = function() {
@@ -69,6 +72,31 @@ DrawingBoard.initializeCanvases = function() {
 	this.brushlocation = {x:0, y:0};
 	this.context = context;
 	this.canvas = canvas;
+}
+
+
+DrawingBoard.emitBrushColor = function(color, id) {
+	this.socket.emit('changebrushcolor', {c: color, uid: id});
+}
+
+DrawingBoard.emitBrushWidth = function(width, id) {
+	this.socket.emit('changebrushwidth', {w: width, uid: id});
+}
+
+DrawingBoard.changeBrushWidth = function(width, uid) {
+	var user = this.users[uid];
+	user.changeBrushWidth(width);
+	if(uid == this.owner.uid) {
+		this.drawCurrentBrush();
+	}
+}
+
+DrawingBoard.changeBrushColor = function(color, uid) {
+	var user = this.users[uid];
+	user.changeBrushColor(color);
+	if(uid == this.owner.uid) {
+		this.drawCurrentBrush();
+	}
 }
 
 DrawingBoard.setBrushLocation = function(brushlocation) {
@@ -121,13 +149,6 @@ DrawingBoard.setBrush = function(brush) {
 	this.activeBrush = brush;
 }
 
-DrawingBoard.changeBrushColor = function(color, uid) {
-	var user = this.users[uid];
-	user.changeBrushColor(color);
-	if(uid == this.owner.uid) {
-		this.drawCurrentBrush(this.brushViewContext);
-	}
-}
 
 DrawingBoard.drawCurrentBrush = function() {
 	var thisuser = this.users[this.owner.uid];

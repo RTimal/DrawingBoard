@@ -1,11 +1,11 @@
 var DrawingBoard = DrawingBoard || {};
 DrawingBoard.Events = DrawingBoard.Events || {};
 
-DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, owner, emitEvent, drawCallBack, chatCallback, changeBrushColorCallBack) {
+DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, owner, emitEvent, drawCallBack, chatCallback, changeBrushColorCallBack, changeBrushWidthCallBack) {
 	this.chatsocket = chatsocket;
 	this.canvas = canvas;
 	this.owner = owner;
-	this.bindDOMEvents(changeBrushColorCallBack);
+	this.bindDOMEvents(changeBrushColorCallBack, changeBrushWidthCallBack);
 	this.bindChatEvents(chatCallback);
 	this.mouseEvents = Array();
 	var self = this;
@@ -53,16 +53,30 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 
 }
 
-DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
+DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack, changeBrushWidthCallBack) {
+	var self = this;
 
 	$('#slider').slider({
 		min:1, 
-		max:30, 
+		max:50, 
 		disabled:false, 
 		animate: true, 
 		step:1,
 		slide: function(event, ui) {
-			console.log(ui.value);
+			changeBrushWidthCallBack(ui.value, self.owner.uid);
+		}
+	});
+
+	$("#picker").spectrum({
+		showAlpha: true,
+		clickoutFiresChange: true,
+		flat: true,
+		showInput: true,
+		preferredFormat: "rgb",
+		move: function(tinycolor) {
+			var color = tinycolor.toRgb();
+			var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
+			changeBrushColorCallBack(c, self.owner.uid);
 		}
 	});
 
@@ -74,11 +88,11 @@ DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
 		window.open("/", '_self', false);
 	});
 
-	var self = this;
 	
 	$('#textbox').focus();
 
 	$('#username #value').text(this.owner.name);
+
 	$('#room #value').text(this.owner.room);
 
 	$('#drawingboard').mousedown(function (event) {
@@ -99,18 +113,6 @@ DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
 		self.canvasOffsetTop = $(self.canvas).offset().top; 
 	});
 
-	$("#picker").spectrum({
-		showAlpha: true,
-		clickoutFiresChange: true,
-		flat: true,
-		showInput: true,
-		preferredFormat: "rgb",
-		move: function(tinycolor) {
-			var color = tinycolor.toRgb();
-			var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
-			changeBrushColorCallBack(c, self.owner.uid);
-		}
-	});
 	
 }
 
