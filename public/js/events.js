@@ -106,8 +106,6 @@ DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack) {
 		showInput: true,
 		preferredFormat: "rgb",
 		move: function(tinycolor) {
-			//change the brush color locally for this user, draw the brush again
-			//change the brush over network to this brush
 			var color = tinycolor.toRgb();
 			var c = "rgba(" + color.r + "," +  color.g + "," + color.b + "," + color.a + ")";
 			changeBrushColorCallBack(c, self.owner.uid);

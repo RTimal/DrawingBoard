@@ -39,7 +39,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		function (location) {
 			self.refresh(location);
 		}, 
-		//callback for drawing
+		//callback for drawingnd over
 		function (eventType, userID, brushlocation) {
 			self.draw(eventType, userID, brushlocation);
 		}, 
@@ -47,7 +47,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		function (message) {
 			self.Chat.sendChatMessage(message);
 		},
-
+		//callback for changing brush color locally and over network
 		function (color, uid) {
 			self.changeBrushColor(color, uid);
 			if(uid == self.owner.uid) { 
@@ -108,12 +108,12 @@ DrawingBoard.refresh = function(location) {
 }
 
 DrawingBoard.connectToEventsServer = function () {
-	var socket = io.connect('http://localhost:81');
+	var socket = io.connect('http://192.168.1.12:81');
 	this.socket = socket;
 }
 
 DrawingBoard.connectToChatServer = function () {
-	var chatsocket = io.connect('http://localhost:82');
+	var chatsocket = io.connect('http://192.168.1.12:82');
 	this.chatsocket = chatsocket;
 }
 

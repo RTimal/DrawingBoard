@@ -32,7 +32,6 @@ app.post('save', function (req, res) {
 
 });
 
-
 app.get('/photos', function (req, res) {
 	res.render('gallery.hbs');
 });

@@ -1,13 +1,20 @@
 {
-  "name": "DrawingBoard",
+  "name": "RTDrawingBoard",
   "description": "Drawing Board",
-  "version": "0.5",
+  "version": "0.3.0-7",
   "private": true,
   "dependencies": {
-    "express": "3.x",
-    "express-hbs": "*",
-    "handlebars": "*",
-    "mongoose": "*",
-    "socket.io": "*"
+    "express": "3.0.1",
+    "express-hbs": "0.1.1",
+    "socket.io": "0.9.10",
+    "html": "*",
+    "jitsu": "*"
+  },
+  "subdomain": "RTimalDraw",
+  "scripts": {
+    "start": "mainserver.js"
+  },
+  "engines": {
+    "node": "0.6.x"
   }
 }
