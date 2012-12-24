@@ -14,7 +14,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 		name: this.username, 
 		room: this.room,
 		provider: "drawingboard",
-		brushData: {
+		brushData: { 
 			brushName: "line",
 			brushColor: "rgb(230, 51, 51)",
 			brushWidth: 1,

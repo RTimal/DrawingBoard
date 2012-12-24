@@ -7,8 +7,9 @@
     "express": "3.0.1",
     "express-hbs": "0.1.1",
     "socket.io": "0.9.10",
-    "html": "*",
-    "jitsu": "*"
+    "jitsu": "*",
+    "mongoose": "3.5.2",
+    "knox": "1.2.7"
   },
   "subdomain": "RTimalDraw",
   "scripts": {
