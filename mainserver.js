@@ -2,8 +2,7 @@ var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
-	hbs = require('express-hbs'),
-	artwork = require('./modules/Models/Artwork');
+	hbs = require('express-hbs');
 
 //io.set('log level', 1);
 app.engine('hbs', hbs.express3({
@@ -29,8 +28,14 @@ app.get('/gallery', function (req, res) {
 	res.render('gallery.hbs');
 });
 
-app.get('/save', function (req, res) {
-	//Artwork.save(artworkdata, userid);
+app.get('/artwork', function (req, res) {
+	Artwork = require('./modules/Models/Artwork');
+	res.render('gallery.hbs');
+});
+
+app.get('/user', function (req, res) {
+	User = require('./modules/Models/User');
+	res.render('gallery.hbs');
 });
 
 app.get('/photos', function (req, res) {
