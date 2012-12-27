@@ -1,7 +1,7 @@
 {
   "name": "RTDrawingBoard",
   "description": "Drawing Board",
-  "version": "0.3.0-7",
+  "version": "0.3.0-13",
   "private": true,
   "dependencies": {
     "express": "3.0.1",
@@ -9,7 +9,7 @@
     "socket.io": "0.9.10",
     "jitsu": "*",
     "mongoose": "3.5.2",
-    "knox": "1.2.7"
+    "knox": "*"
   },
   "subdomain": "RTimalDraw",
   "scripts": {

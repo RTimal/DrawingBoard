@@ -96,8 +96,7 @@ DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack, changeBru
 	$('#textbox').focus();
 
 	$('#username #value').text(this.owner.name);
-
-	$('#room #value').text(this.owner.room);
+	$('#roomtitle #value').text(this.owner.room);
 
 	$('#drawingboard').mousedown(function (event) {
 		$('#tools').addClass("unselectable");

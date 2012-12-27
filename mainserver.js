@@ -14,7 +14,17 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
-server.listen(83);
+var port;
+switch(process.env.NODE_ENV) {
+	case "production":
+		port = 80;
+		break;
+	default: 
+		port = 80;
+		break;
+	}
+
+server.listen(port);
 
 io.sockets.on('connection', function (socket) {
 

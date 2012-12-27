@@ -1,12 +1,18 @@
 var DrawingBoard = DrawingBoard || {};
 
 DrawingBoard.initDrawingBoard = function(username) {
+	this.config = {
+		chatip: (window.location.href.indexOf("localhost") >-1) ? "http://localhost:81" : "http://rtdrawingboardchat.jit.su:80",
+		drawingip: (window.location.href.indexOf("localhost") >-1 ) ? "http://localhost:82" : "http://rtdrawingboarddraw.jit.su:80",	
+	};
+
 	this.initializeCanvases();
 	var self = this;
 	this.room = this.Utils.getParam("room");
 	if(this.room == undefined) {
 	this.room = "Lobby"
 	}
+
 	this.username = "guest";
 	this.username = prompt("Please enter your chat name", "Guest");
 
@@ -136,12 +142,12 @@ DrawingBoard.refresh = function(location) {
 }
 
 DrawingBoard.connectToEventsServer = function () {
-	var socket = io.connect('http://localhost:81');
+	var socket = io.connect(this.config.drawingip);
 	this.socket = socket;
 }
 
 DrawingBoard.connectToChatServer = function () {
-	var chatsocket = io.connect('http://localhost:82');
+	var chatsocket = io.connect(this.config.chatip);
 	this.chatsocket = chatsocket;
 }
 
