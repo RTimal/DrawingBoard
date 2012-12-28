@@ -29,7 +29,7 @@ function Artwork () {
 		var self = this;
 		//store to s3
 		var req = storage.s3.put('/' + self.uid + '/artwork.png', {
-			'Content-Length': data.length,
+			'Content-Length': png.length,
 			'Content-Type' : 'image/png'
 		});
 

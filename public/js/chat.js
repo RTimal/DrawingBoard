@@ -14,6 +14,7 @@ DrawingBoard.Chat.sendChatMessage = function(message) {
 	if(message.uid == this.owner.uid) {
 		this.sendToSelf(message);
 		this.sendToOthers(message);
+		$('#textbox').val('');
 		$('#textbox').focus();
 	} else {
 		this.sendToSelf(message);
@@ -25,7 +26,6 @@ DrawingBoard.Chat.sendToSelf = function(message) {
 	$("#chatboard").append($msg);
 	var scrollHeight = $('#chatboard')[0].scrollHeight;
 	$('#chatboard').scrollTop(scrollHeight);
-	$('#textbox').val('');
 }
 
 DrawingBoard.Chat.sendToOthers = function(message) {

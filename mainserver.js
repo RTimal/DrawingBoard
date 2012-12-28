@@ -2,7 +2,8 @@ var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
-	hbs = require('express-hbs');
+	hbs = require('express-hbs'),
+	fs = require('fs');
 
 //io.set('log level', 1);
 app.engine('hbs', hbs.express3({
@@ -13,6 +14,7 @@ app.engine('hbs', hbs.express3({
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
+app.use(express.bodyParser());
 
 var port;
 switch(process.env.NODE_ENV) {
@@ -40,6 +42,7 @@ app.get('/gallery', function (req, res) {
 
 app.get('/artwork', function (req, res) {
 	Artwork = require('./modules/Models/Artwork');
+
 	res.render('gallery.hbs');
 });
 
@@ -50,4 +53,11 @@ app.get('/user', function (req, res) {
 
 app.get('/photos', function (req, res) {
 	res.render('gallery.hbs');
+});
+
+app.post('/save',function (req, res) {
+	var b64image = req.body.image.replace(/^data:image\/\w+;base64,/, "");
+	var buf = new Buffer(b64image, 'base64');
+	res.attachment('image.png');
+	res.send(buf);
 });

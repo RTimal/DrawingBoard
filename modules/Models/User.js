@@ -2,7 +2,7 @@ var storage = require('../storage');
 var userSchema = storage.mongoose.Schema({
 	id: "string",
 	first_name: "string",
-	last_name: "string"
+	last_name: "string",
 });
 
 

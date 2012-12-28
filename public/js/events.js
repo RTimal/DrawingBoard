@@ -60,6 +60,22 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack, changeBrushWidthCallBack) {
 	var self = this;
 
+	$('#save').live('click',function(){
+		var image = self.canvas.toDataURL();
+		 event.preventDefault();
+			var newForm = jQuery('<form>', {
+				'action': '/save',
+				'target': '_top',
+				'method': 'post'
+			}).append(jQuery('<input>', {
+				'name': 'image',
+				'value': image,
+				'type': 'hidden'
+			}));
+			newForm.submit();
+	});
+
+
 	$('#slider').slider({
 		min:1, 
 		max:50, 
