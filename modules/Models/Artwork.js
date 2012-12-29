@@ -6,6 +6,8 @@ var artworkschema = storage.mongoose.Schema({
 	user_id: 'string',
 	url: 'string',
 	title: 'string',
+	created: {type: Date, default: Date.now},
+	updated: {type:Date, default: Date.now}
 });
 
 function Artwork () {
@@ -27,7 +29,7 @@ function Artwork () {
 
 	this.save = function() {
 		var self = this;
- 		 var data = {Bucket: 'thedrawingboard', Key: this.unique_id + ".png", Body: this.image};
+ 		 var data = {Bucket: 'thedrawingboard', Key: this.filename, Body: this.image};
 	  		storage.s3.client.putObject(data, function(err, data) {
 	  			console.log(data);
 	  			self.storeToMongo();

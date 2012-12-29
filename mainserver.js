@@ -41,15 +41,16 @@ app.get('/gallery', function (req, res) {
 });
 
 app.post('/publish', function (req, res) {
-	Artwork = require('./modules/Models/Artwork');
-	Artwork.setData(req.body);
+	artwork = require('./modules/Models/Artwork');
+	artwork.setData(req.body);
 	var saved = Artwork.save();
 	res.send({saved: saved});
 });
 
-app.get('/user', function (req, res) {
-	User = require('./modules/Models/User');
-	res.render('gallery.hbs');
+app.post('/user', function (req, res) {
+	user = require('./modules/Models/User');
+	user.setData(req.body);
+	user.save();
 });
 
 app.get('/photos', function (req, res) {

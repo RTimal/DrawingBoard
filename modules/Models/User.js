@@ -3,26 +3,41 @@ var userSchema = storage.mongoose.Schema({
 	id: "string",
 	first_name: "string",
 	last_name: "string",
+	last_brush: "string",
+	last_brush_size: "string",
+	last_room_name: "string",
+	updated: { type: Date, default: Date.now} 
 });
 
 
 function User () {
+
 	this.setData = function(data) {
-		this.fb_id = data.fb_id;
-		this.first_name = data.first_name;
-		this.last_name = data.last_name;
+		for(var prop in data) {
+			this[prop] = data[prop];
+		}
+		this.userModel =  storage.mongoose.model('User', userSchema);
 	}
 
-	this.save = function(){
-		this.store();
+	this.save = function() {
+		var self = this;
+		this.doesNotExist(this.storeToMongo);
 	}
 
-	this.store = function() {
-		this.storeToMongo();
+	this.doesNotExist = function(callback) {
+		this.userModel.findOne({'fb_id': this.fb_id}, function(err, user) {
+			if(!user) {
+				callback();
+			}	
+		});	
+	}
+
+	this.update = function(params) {
+
 	}
 
 	this.storeToMongo = function() {
-		var User = storage.mongoose.model('User', userSchema);
+
 		var thisUser = new User({
 			fb_id: this.fb_id,
 			first_name: this.first_name,
