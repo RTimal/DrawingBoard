@@ -1,4 +1,6 @@
 var storage = require('../storage');
+var Utils = require('../Utils');
+
 var artworkschema = storage.mongoose.Schema({
 	art_id : 'string',
 	user_id: 'string',
@@ -7,55 +9,51 @@ var artworkschema = storage.mongoose.Schema({
 });
 
 function Artwork () {
-	//store to s3
-	//store url under users id
-	this.setData = function(img) {
-		this.uid = img.uid;
-		this.title = img.title;
-		this.imageData = img.imagedata;
+	this.setData = function(data) {
+		for(var prop in data) {
+			this[prop] = data[prop];
+		}
+		this.unique_id = Utils.uniqid();
+		this.filename = this.unique_id + ".png";
+		this.convertToPNG();
+		this.fileUrl = storage.gets3Url() + this.filename;
 	}, 
 
-	this.save = function() {
-		this.store(this.convertToPNG());
-	}
-
 	this.convertToPNG = function() {
-		//use this .imageData
-		//convert from base64
-		//return data
+		var b64image = this.image.replace(/^data:image\/\w+;base64,/, "");
+		var buf = new Buffer(b64image, 'base64');
+		this.image = buf;
 	}
 
-	this.store = function(png) {
+	this.save = function() {
 		var self = this;
-		//store to s3
-		var req = storage.s3.put('/' + self.uid + '/artwork.png', {
-			'Content-Length': png.length,
-			'Content-Type' : 'image/png'
-		});
-
-		req.on('response', function(res) {
-			if(200 == res.statusCode) {
-				self.storeToMongo(req.url);
-			}
-		});
+ 		 var data = {Bucket: 'thedrawingboard', Key: this.unique_id + ".png", Body: this.image};
+	  		storage.s3.client.putObject(data, function(err, data) {
+	  			console.log(data);
+	  			self.storeToMongo();
+	  		});
 	}
 
-	this.storeToMongo = function(url) {
+	this.storeToMongo = function() {
 
 		var Artwork = storage.mongoose.model('Artwork', artworkschema);
 		
 		var drawing = new Artwork({
-			art_id: "id",
+			art_id: this.unique_id,
 			user_id: this.uid,
-			url: url,
+			url: this.fileUrl,
 			title: this.title
 		});
 
 		drawing.save(function (err) {
 			if(err) {
 				console.log("error");
+			} else {
+				return true;
 			}
 		});
+
+
 	}
 
 }

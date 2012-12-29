@@ -40,10 +40,11 @@ app.get('/gallery', function (req, res) {
 	res.render('gallery.hbs');
 });
 
-app.get('/artwork', function (req, res) {
+app.post('/publish', function (req, res) {
 	Artwork = require('./modules/Models/Artwork');
-
-	res.render('gallery.hbs');
+	Artwork.setData(req.body);
+	var saved = Artwork.save();
+	res.send({saved: saved});
 });
 
 app.get('/user', function (req, res) {

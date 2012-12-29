@@ -59,6 +59,23 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 
 DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack, changeBrushWidthCallBack) {
 	var self = this;
+	$('#publish').live('click',function(){
+		var uid = 123;
+		var title = "hey";
+		$.post('/publish', {image: self.canvas.toDataURL(), uid: uid, title:title });
+		FB.getLoginStatus(function(response){
+			if(response.status === 'connected') {
+				var uid = response.authResponse.userID;
+				var accessToken = response.authResponse.accessToken;
+				var title = prompt('please enter a title');
+				$.post('/publish', {image: self.canvas.toDataURL(), uid: uid, title:title });
+			} else if (response.status === 'not authorized') {
+				alert("Please log in with facebook before you can publish");
+			} else {
+				alert("Please log in with facebook before you can publish");
+			}
+		}); 
+	});
 
 	$('#save').live('click',function(){
 		var image = self.canvas.toDataURL();
