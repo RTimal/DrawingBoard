@@ -59,6 +59,10 @@ DrawingBoard.Users.getOwnerId = function () {
 	return this.ownerID;
 }
 
+DrawingBoard.Users.setOwnerId = function(owner) {
+	this.ownerID = owner.uid;
+}
+
 DrawingBoard.Users.addUser = function(user, drawBrushCallback) {
 
 	user.draw = function(brushlocation, context, eventType) {

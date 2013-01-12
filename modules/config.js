@@ -5,4 +5,5 @@ var config = {
 	s3bucket: "thedrawingboard",
 }
 config.s3BucketURL = "https://s3.amazonaws.com/" + config.s3bucket + "/";
+
 module.exports = config;

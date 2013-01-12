@@ -43,18 +43,18 @@ app.get('/gallery', function (req, res) {
 app.post('/publish', function (req, res) {
 	artwork = require('./modules/Models/Artwork');
 	artwork.setData(req.body);
-	var saved = Artwork.save();
-	res.send({saved: saved});
+	var saved = artwork.save();
+	res.send({ok: "ok"});
 });
 
 app.post('/user', function (req, res) {
-	user = require('./modules/Models/User');
-	user.setData(req.body);
-	user.save();
+	//user = require('./modules/Models/User');
+	//user.setData(req.body);
+	//user.save();
 });
 
 app.get('/photos', function (req, res) {
-	res.render('gallery.hbs');
+	//res.render('gallery.hbs');
 });
 
 app.post('/save',function (req, res) {

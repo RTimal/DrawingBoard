@@ -13,3 +13,17 @@ DrawingBoard.Utils.getParam = function (key) {
 		}
 	}
 }
+
+DrawingBoard.Utils.uniqid = function() {
+	var newDate = new Date;
+	var partOne = newDate.getTime();
+	var partTwo = 1 + Math.floor((Math.random()*32767));
+	var partThree = 1 + Math.floor((Math.random()*32767));
+	var id = partOne + '-' + partTwo + '-' + partThree;
+	return id;
+}
+
+DrawingBoard.Utils.getGuestName = function() {
+	var u = this.uniqid();
+	return "guest" + u.substr(u.length-4,u.length);
+}

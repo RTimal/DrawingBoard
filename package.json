@@ -1,14 +1,14 @@
 {
   "name": "RTDrawingBoard",
   "description": "Drawing Board",
-  "version": "0.3.0-17",
+  "version": "0.3.0-57",
   "private": true,
   "dependencies": {
     "express": "3.0.1",
     "express-hbs": "0.1.1",
     "socket.io": "0.9.10",
-    "jitsu": "*",
     "mongoose": "3.5.2",
+    "aws-sdk": "*",
     "knox": "*"
   },
   "subdomain": "RTimalDraw",

@@ -13,10 +13,9 @@ DrawingBoard.initDrawingBoard = function(username) {
 	this.room = "Lobby"
 	}
 
-	this.username = "guest";
-	this.username = prompt("Please enter your chat name", "Guest");
+	this.username = this.Utils.getGuestName();
 
-	userData = {
+	this.userData = {
 		name: this.username, 
 		room: this.room,
 		provider: "drawingboard",
@@ -30,7 +29,7 @@ DrawingBoard.initDrawingBoard = function(username) {
 	this.connectToEventsServer();
 	this.connectToChatServer();
 
-	var owner = this.Users.initialize(this.socket, userData, function () {
+	var owner = this.Users.initialize(this.socket, this.userData, function () {
 		self.drawCurrentBrush();
 	});
 
@@ -165,4 +164,13 @@ DrawingBoard.draw = function(eventType, userID, brushlocation) {
 		var user = this.users[userID];
 		user.draw(brushlocation, this.context, eventType);
 	}
+}
+
+DrawingBoard.initSocialUser = function() {
+	this.Events.initSocialUser(this.userData);
+}
+
+DrawingBoard.changeOwner = function(owner) {
+	this.owner = owner;
+	this.Users.setOwnerId(owner);
 }

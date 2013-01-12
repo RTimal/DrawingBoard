@@ -1,7 +1,7 @@
 var storage = require('../storage');
 var Utils = require('../Utils');
 
-var artworkschema = storage.mongoose.Schema({
+var artworkschema = storage.getMongoose().Schema({
 	art_id : 'string',
 	user_id: 'string',
 	url: 'string',
@@ -23,22 +23,37 @@ function Artwork () {
 
 	this.convertToPNG = function() {
 		var b64image = this.image.replace(/^data:image\/\w+;base64,/, "");
-		var buf = new Buffer(b64image, 'base64');
-		this.image = buf;
+		this.image = new Buffer(b64image, 'base64');
 	}
 
 	this.save = function() {
 		var self = this;
- 		 var data = {Bucket: 'thedrawingboard', Key: this.filename, Body: this.image};
-	  		storage.s3.client.putObject(data, function(err, data) {
+
+ 		/* var data = {Bucket: 'thedrawingboard', Key: this.filename, Body: this.image};
+	  		storage.getS3Client().putObject(data, function(err, data) {
 	  			console.log(data);
 	  			self.storeToMongo();
 	  		});
+	  	*/
+
+	  	var req = storage.getS3Client().put(this.filename, {
+	  		'Content-Length': self.image.length,
+	  	});
+
+	  	req.on('response', function(res) {
+	  		console.log(res.statusCode);
+	  		if(200 == res.statusCode) {
+	  			console.log('saved to %s', req.url);
+	  			self.storeToMongo();
+	  		}
+	  	});
+
+	  	req.end(this.image);
 	}
 
 	this.storeToMongo = function() {
 
-		var Artwork = storage.mongoose.model('Artwork', artworkschema);
+		var Artwork = storage.getMongoose().model('Artwork', artworkschema);
 		
 		var drawing = new Artwork({
 			art_id: this.unique_id,
@@ -53,8 +68,8 @@ function Artwork () {
 			} else {
 				return true;
 			}
+			storage.getMongoose().connection.close();
 		});
-
 
 	}
 
