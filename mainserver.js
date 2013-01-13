@@ -33,6 +33,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 app.get('/', function (req, res) {
+		user = require('./modules/Models/User');
 		res.render('index.hbs');
 	});
 
@@ -48,9 +49,10 @@ app.post('/publish', function (req, res) {
 });
 
 app.post('/user', function (req, res) {
-	//user = require('./modules/Models/User');
-	//user.setData(req.body);
-	//user.save();
+	user = require('./modules/Models/User');
+	user.setData(req.body);
+	user.save();
+	res.send({ok: "ok"});
 });
 
 app.get('/photos', function (req, res) {

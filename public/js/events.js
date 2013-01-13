@@ -3,6 +3,7 @@ DrawingBoard.Events = DrawingBoard.Events || {};
 
 DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, owner, emitEvent, drawCallBack, chatCallback, changeBrushColorCallBack, changeBrushWidthCallBack) {
 	this.chatsocket = chatsocket;
+	this.drawingsocket = socket;
 	this.canvas = canvas;
 	this.owner = owner;
 	this.bindDOMEvents(changeBrushColorCallBack, changeBrushWidthCallBack);
@@ -60,17 +61,15 @@ DrawingBoard.Events.bindEventHandlers = function (canvas, socket, chatsocket, ow
 DrawingBoard.Events.bindDOMEvents = function(changeBrushColorCallBack, changeBrushWidthCallBack) {
 	var self = this;
 	$('#publish').live('click',function() {
-		var uid = 123;
+		var uid = self.owner.uid;
 		var title = "hey";
-		$.post('/publish', {image: self.canvas.toDataURL(), uid: uid, title:title });
+		//$.post('/publish', {image: self.canvas.toDataURL(), uid: uid, title:title });
 		FB.getLoginStatus(function(response) {
 			if(response.status === 'connected') {
 				var uid = response.authResponse.userID;
 				var accessToken = response.authResponse.accessToken;
 				var title = prompt('please enter a title for this artwork', 'my awesome');
-				console.log(uid);
-				console.log(title);
-				//$.post('/publish', {image: self.canvas.toDataURL(), uid: uid, title:title });
+				$.post('/publish', {image: self.canvas.toDataURL(), uid: uid, title:title });
 			} else if (response.status === 'not authorized') {
 				alert("Please log in with facebook before you can publish");
 			} else {
@@ -205,6 +204,12 @@ DrawingBoard.Events.getMouseEvents = function() {
 	return this.mouseEvents;
 }
 
+DrawingBoard.Events.changeUser = function(username, uid, service) {
+	this.drawingsocket.emit('changeuser', JSON.stringify({u:username, uid: uid, service: "service"}));
+	$('#username #value').text(username);
+}
+
 DrawingBoard.Events.initSocialUser = function(userData) {
-	this.Social.initFb(userData);
+	var self = this;
+	this.Social.initFb(userData, self.changeUser);
 }

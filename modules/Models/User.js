@@ -1,11 +1,11 @@
 var storage = require('../storage');
+
 var userSchema = storage.getMongoose().Schema({
 	uid: "string",
-	name: "string",
+	username: "string",
 	provider: "string",
 	updated: { type: Date, default: Date.now }  
 });
-
 
 function User () {
 
@@ -22,7 +22,7 @@ function User () {
 	}
 
 	this.doesNotExist = function(callback) {
-		this.userModel.findOne({'fb_id': this.fb_id}, function(err, user) {
+		this.userModel.findOne({'uid': this.uid}, function(err, user) {
 			if(!user) {
 				callback();
 			}	
@@ -35,15 +35,15 @@ function User () {
 
 	this.storeToMongo = function() {
 
-		var thisUser = new User({
-			fb_id: this.fb_id,
-			first_name: this.first_name,
-			last_name: this.last_name
+		var thisUser = new this.userModel({
+			uid: this.uid,
+			username: this.username,
+			provider: this.provider
 		});
 
 		thisUser.save(function (err) {
 			if(err){
-				console.log("error");
+				//console.log("error");
 			}
 		});
 
