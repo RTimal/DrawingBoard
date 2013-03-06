@@ -8,5 +8,5 @@ Steps
 3. run node server.js
 4. run node chatserver.js
 5. run mainserver.js
-5. go to http://localhost:81 in 2 browsers if on localhost
+5. go to http://localhost:80 in 2 browsers if on localhost
 6. Draw
