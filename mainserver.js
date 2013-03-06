@@ -33,7 +33,6 @@ io.sockets.on('connection', function (socket) {
 });
 
 app.get('/', function (req, res) {
-		user = require('./modules/Models/User');
 		res.render('index.hbs');
 	});
 

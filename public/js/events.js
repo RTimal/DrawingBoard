@@ -204,12 +204,19 @@ DrawingBoard.Events.getMouseEvents = function() {
 	return this.mouseEvents;
 }
 
-DrawingBoard.Events.changeUser = function(username, uid, service) {
-	this.drawingsocket.emit('changeuser', JSON.stringify({u:username, uid: uid, service: "service"}));
-	$('#username #value').text(username);
+DrawingBoard.Events.changeUser = function(data) {
+	$('#username #value').text(data.username);
+		//change name on users list
+	//change name for everyone else
+	//change your uid
+	//change uid on server
+	//change uid for everyone else to fb uid
+	this.drawingsocket.emit('changeuser', JSON.stringify({u:data.username, uid: data.uid, provider: data.provider}));
 }
 
 DrawingBoard.Events.initSocialUser = function(userData) {
 	var self = this;
-	this.Social.initFb(userData, self.changeUser);
+	this.Social.initFb(userData, function(data) {
+		self.changeUser(data);
+	});
 }

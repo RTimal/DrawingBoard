@@ -2,7 +2,7 @@ var DrawingBoard = DrawingBoard || {}
 DrawingBoard.Events.Social = DrawingBoard.Events.Social || {}
 
 
-DrawingBoard.Events.Social.initFb = function(changeUserCallback) {
+DrawingBoard.Events.Social.initFb = function(userData, changeUserCallback) {
 	this.changeUserCallback = changeUserCallback;
 	console.log("here");
 	var self = this;
@@ -39,12 +39,12 @@ DrawingBoard.Events.Social.saveUser = function() {
 
 DrawingBoard.Events.Social.storeUser = function (username, uid) {
 	var self = this;
-	//change name on users list
-	//change name for everyone else
-	//change your uid
-	//change uid on server
-	//change uid for everyone else to fb uid
+
 	$.post('/user', {username: username, uid: uid, provider: "fb"}, function(data) {
-		self.changeUserCallback(name, uid, "fb");
+		self.changeUserCallback({username: username, uid: uid, provider: "fb"});
+		console.log("received callback");
+		console.log("name:" + username);
+		console.log("uid:" + uid);
+		console.log("data:" + data);
 	});
 }

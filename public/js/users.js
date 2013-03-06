@@ -18,7 +18,14 @@ DrawingBoard.Users.initialize = function(socket, userData, drawBrushCallback) {
 	var self = this;
 	var owner = new User(userData);
 	this.ownerID = owner.uid;
+	var self = this;
 
+	socket.on('message' , function(data) {
+		if (JSON.parse(data).message == "adduser") {
+			u = JSON.parse(data);
+			self.addUser(u, drawBrushCallback);
+		}
+	});
 
 	socket.emit('getusers', {});
 
@@ -30,12 +37,13 @@ DrawingBoard.Users.initialize = function(socket, userData, drawBrushCallback) {
 	});
 
 	socket.on('adduser', function (user) {
+		console.log("adduserrr");
 		u = JSON.parse(user);
 		self.addUser(u, drawBrushCallback);
 	});
 
+	//self.addUser(owner, drawBrushCallback);
 	socket.emit('join', JSON.stringify(owner));
-
 	return owner;
 }
 
@@ -82,8 +90,10 @@ DrawingBoard.Users.addUser = function(user, drawBrushCallback) {
 	}
 
 	this.generateUserBrush(user);
+	console.log(user.uid);
 
 	this.users[user.uid.toString()] = user;
+	console.log(this.users);
 	if(user.uid == this.ownerID) {
 		drawBrushCallback();
 	}
