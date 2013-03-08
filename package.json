@@ -1,7 +1,7 @@
 {
   "name": "RTDrawingBoard",
   "description": "Drawing Board",
-  "version": "0.3.0-70",
+  "version": "0.3.0-71",
   "private": true,
   "dependencies": {
     "express": "3.0.1",
