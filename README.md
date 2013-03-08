@@ -28,7 +28,7 @@ Many people can be on the site to draw and chat simulateously.
 
 Please be sure to add your own s2, and mongoose info in Models/config.js while running this code.
 
-modules/config.js format should be like this, repr ownlacing keys with your own info
+modules/config.js format should be like this, replacing keys with your own
 
 var config = {
 	mongouri: "",
