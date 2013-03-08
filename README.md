@@ -28,3 +28,16 @@ Many people can be on the site to draw and chat simulateously.
 ?room=room query string creates a new room
 
 Please be sure to add your own redis, s2, and mongoose info in Models/config.js while running this code.
+
+modules/config.js format should be like this, repr ownlacing keys with your own info
+
+var config = {
+	mongouri: "",
+	s3key: "",
+	s3secret: "",
+	s3bucket: "",
+}
+
+config.s3BucketURL = "https://s3.amazonaws.com/" + config.s3bucket + "/";
+
+module.exports = config;
