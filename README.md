@@ -3,7 +3,8 @@ DrawingBoard
 Simple real time drawing with others + chat using socket.io and node.js
 
 Steps
-1. Install node.js and download all 3 repos (chat, drawing, main) Do NPM install on all three directories.
+
+1. Install node.js and download all 3 repos (chat, drawing, main) run NPM install from command line in all three directories.
 
 2. Navigate to each directory (chat server, drawing server, and mainserver) after downloading the code from all three repos.
 
@@ -17,17 +18,15 @@ Steps
 
 6. Draw and watch it appear simulatenously in both browsers
 
+Live Demo can be seen at 
 
-
-
-demo can be seen at 
 http://www.rtimaldraw.jit.su
 
 Many people can be on the site to draw and chat simulateously.
 
 ?room=room query string creates a new room
 
-Please be sure to add your own redis, s2, and mongoose info in Models/config.js while running this code.
+Please be sure to add your own s2, and mongoose info in Models/config.js while running this code.
 
 modules/config.js format should be like this, repr ownlacing keys with your own info
 
